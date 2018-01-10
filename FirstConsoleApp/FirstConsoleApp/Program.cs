@@ -11,7 +11,15 @@ namespace FirstConsoleApp
     {
         static void Main(string[] args)
         {
-
+            //recognized flag at startup (-server)
+            if(args.Contains("-server"))
+            {
+                Console.WriteLine("Running as Server");
+            }
+            else
+            {
+                Console.WriteLine("Running as Client");
+            }
 
             //recognize when a specific key is pressed
             while (true) //endless loop
