@@ -12,8 +12,18 @@ namespace FirstConsoleApp
         {
             //recognize when a specific key is pressed
 
+            ConsoleKeyInfo pressedKey = Console.ReadKey(true);
+            if (pressedKey.Key == ConsoleKey.I)
+            {
+                Console.WriteLine("You Pressed the I Key!!");
+            }
+            else
+            {
+                Console.WriteLine("You didn't press the I key...");
+            }
+
             //read or take in input
-            string message = Console.ReadLine();
+            string message = Console.ReadLine(); //blocking call
 
             //display output
             Console.WriteLine("Here's some output!!");
@@ -22,7 +32,7 @@ namespace FirstConsoleApp
            //recognize flag at startup (-server)
 
             //keep window open
-            Console.ReadKey();
+            Console.ReadKey(); //blocking call
         }
     }
 }
