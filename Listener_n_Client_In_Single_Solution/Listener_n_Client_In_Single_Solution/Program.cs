@@ -12,16 +12,36 @@ namespace Listener_n_Client_In_Single_Solution
     {
         static void Main(string[] args)
         {
+            //check if in server mode or not
+            if (args.Contains("-server"))
+            {
+                if (args.Length == 2)
+                {
+                    RunServer(int.Parse(args[1]));
+                }
+                else
+                {
+                    RunServer();
+                }
+            }
+            else
+            {
+                RunClient("127.0.0.1", "Hello From Client!");
+            }
 
         }
 
-        static void RunServer()
+        /// <summary>
+        /// Run application in server mode
+        /// </summary>
+        /// <param name="port">The port that you wish to listen on when starting server</param>
+        static void RunServer(int port = 13000)
         {
             TcpListener server = null;
             try
             {
                 // Set the TcpListener on port 13000.
-                Int32 port = 13000;
+                //Int32 port = 13000;
                 IPAddress localAddr = IPAddress.Parse("127.0.0.1");
 
                 // TcpListener server = new TcpListener(port);
