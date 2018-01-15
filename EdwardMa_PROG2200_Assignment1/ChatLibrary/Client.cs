@@ -9,12 +9,12 @@ namespace ChatLibrary
 {
     public class Client
     {
-        static void Main(string[] args)
+        public void Main(string[] args)
         {
             Connect("127.0.0.1", "HELLO!");
         }
 
-        static void Connect(String server, String message)
+        public void Connect(String server, String message)
         {
             try
             {

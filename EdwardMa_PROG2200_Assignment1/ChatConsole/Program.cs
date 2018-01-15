@@ -15,11 +15,13 @@ namespace ChatConsole
             {
                 //server mode
                 Server server = new Server();
+                server.main();
             }
             else
             {
                 //client mode
                 Client client = new Client();
+                client.Connect("127.0.0.1", "Hello?");
             }
         }
     }
