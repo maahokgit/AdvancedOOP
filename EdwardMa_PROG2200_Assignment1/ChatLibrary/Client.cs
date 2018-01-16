@@ -9,63 +9,60 @@ namespace ChatLibrary
 {
     public class Client
     {
-        public void Main(string[] args)
+        public void Connect()
         {
-            Connect("127.0.0.1", "HELLO!");
-        }
-
-        public void Connect(String server, String message)
-        {
-            try
+            Byte[] data = new byte[256];
+            //Byte[] bytes = new byte[256];
+            TcpClient client = new TcpClient("127.0.0.1",13000);
+            while (true) //endless loop
             {
-                // Create a TcpClient.
-                // Note, for this client to work you need to have a TcpServer 
-                // connected to the same address as specified by the server, port
-                // combination.
-                Int32 port = 13000;
-                TcpClient client = new TcpClient(server, port);
-
-                // Translate the passed message into ASCII and store it as a Byte array.
-                Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
-
-                // Get a client stream for reading and writing.
-                //  Stream stream = client.GetStream();
-
+                //check for messages
                 NetworkStream stream = client.GetStream();
-
-                // Send the message to the connected TcpServer. 
-                stream.Write(data, 0, data.Length);
-
-                Console.WriteLine("Sent: {0}", message);
-
-                // Receive the TcpServer.response.
-
-                // Buffer to store the response bytes.
-                data = new Byte[256];
-
                 // String to store the response ASCII representation.
                 String responseData = String.Empty;
-
                 // Read the first batch of the TcpServer response bytes.
-                Int32 bytes = stream.Read(data, 0, data.Length);
+                int i;
+                Int32 bytes = stream.Read(data, 0, data.Length); //breaking point...
                 responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
                 Console.WriteLine("Received: {0}", responseData);
 
-                // Close everything.
-                stream.Close();
-                client.Close();
+                //check for key presses
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo pressedKey = Console.ReadKey(true);
+                    if (pressedKey.Key == ConsoleKey.I)
+                    {
+                        Console.WriteLine("You Pressed the I Key!!");
+                        Console.WriteLine("Please enter a string >>");
+                        //ReadLine example
+                        string input = Console.ReadLine();
+                        if (input == "quit")
+                        {
+                            data = System.Text.Encoding.ASCII.GetBytes(input);
+                            // Send the message to the connected TcpServer. 
+                            stream.Write(data, 0, input.Length);
+                            Console.WriteLine("Sent: {0}", input);
+                            break;
+                        }
+                        else
+                        {
+                            //Console.WriteLine(input);
+                            data = System.Text.Encoding.ASCII.GetBytes(input);
+                            // Send the message to the connected TcpServer. 
+                            stream.Write(data, 0, input.Length);
+                            Console.WriteLine("Sent: {0}", input);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("You didn't press the I key...");
+                    }
+                }
+                Console.WriteLine("Thanks for using the Chat Console!\nPress 'anykey' to quit.");
+                //keep window open
+                Console.ReadKey(); //blocking call
             }
-            catch (ArgumentNullException e)
-            {
-                Console.WriteLine("ArgumentNullException: {0}", e);
-            }
-            catch (SocketException e)
-            {
-                Console.WriteLine("SocketException: {0}", e);
-            }
-
-            Console.WriteLine("\n Press Enter to continue...");
-            Console.Read();
+             
         }
     }
 }

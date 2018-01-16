@@ -10,7 +10,7 @@ namespace ChatLibrary
 {
     public class Server
     {
-        public void main()
+        public void main(string message)
         {
             TcpListener server = null;
             try
@@ -37,7 +37,7 @@ namespace ChatLibrary
                     // Perform a blocking call to accept requests.
                     // You could also user server.AcceptSocket() here.
                     TcpClient client = server.AcceptTcpClient();
-                    Console.WriteLine("Connected!");
+                    Console.WriteLine("\nConnected!");
 
                     data = null;
 
@@ -52,15 +52,18 @@ namespace ChatLibrary
                         // Translate data bytes to a ASCII string.
                         data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
                         Console.WriteLine("Received: {0}", data);
-
+                        if (data == "quit")
+                        {
+                            break;
+                        }
                         // Process the data sent by the client.
-                        data = data.ToUpper();
+                        //data = data.ToUpper();
 
-                        byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
+                        byte[] msg = System.Text.Encoding.ASCII.GetBytes(message);
 
                         // Send back a response.
                         stream.Write(msg, 0, msg.Length);
-                        Console.WriteLine("Sent: {0}", data);
+                        Console.WriteLine("Sent: {0}", message);
                     }
 
                     // Shutdown and end connection
@@ -76,8 +79,6 @@ namespace ChatLibrary
                 // Stop listening for new clients.
                 server.Stop();
             }
-
-
             Console.WriteLine("\nHit enter to continue...");
             Console.Read();
         }

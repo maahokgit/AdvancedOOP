@@ -25,7 +25,7 @@ namespace FirstConsoleApp
             while (true) //endless loop
             {
                 //check for messages
-                Console.WriteLine("Checking Messages");
+                //Console.WriteLine("Checking Messages");
                
                 //check for key presses
                 if(Console.KeyAvailable)
@@ -34,6 +34,18 @@ namespace FirstConsoleApp
                     if (pressedKey.Key == ConsoleKey.I)
                     {
                         Console.WriteLine("You Pressed the I Key!!");
+                        Console.WriteLine("Please enter a string >>");
+                        //ReadLine example
+                        string input = Console.ReadLine();
+                        if (input == "quit")
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine(input);
+                        }
+                        
                     }
                     else
                     {
@@ -44,12 +56,14 @@ namespace FirstConsoleApp
                 Thread.Sleep(250);
             }
 
+            Console.WriteLine("Thanks for using the Chat Console!");
+
             //read or take in input
-            string message = Console.ReadLine(); //blocking call
+            //string message = Console.ReadLine(); //blocking call
 
             //display output
-            Console.WriteLine("Here's some output!!");
-            Console.WriteLine("Here's your message: {0}", message);
+            //Console.WriteLine("Here's some output!!");
+            //Console.WriteLine("Here's your message: {0}", message);
                      
            //recognize flag at startup (-server)
 
