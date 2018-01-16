@@ -14,18 +14,17 @@ namespace ChatLibrary
             Byte[] data = new byte[256];
             //Byte[] bytes = new byte[256];
             TcpClient client = new TcpClient("127.0.0.1",13000);
+            NetworkStream stream = client.GetStream();
             while (true) //endless loop
             {
                 //check for messages
-                NetworkStream stream = client.GetStream();
+
                 // String to store the response ASCII representation.
                 String responseData = String.Empty;
-                // Read the first batch of the TcpServer response bytes.
-                int i;
+                //// Read the first batch of the TcpServer response bytes.
                 Int32 bytes = stream.Read(data, 0, data.Length); //breaking point...
                 responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
                 Console.WriteLine("Received: {0}", responseData);
-
                 //check for key presses
                 if (Console.KeyAvailable)
                 {
@@ -58,11 +57,11 @@ namespace ChatLibrary
                         Console.WriteLine("You didn't press the I key...");
                     }
                 }
-                Console.WriteLine("Thanks for using the Chat Console!\nPress 'anykey' to quit.");
-                //keep window open
-                Console.ReadKey(); //blocking call
+                
             }
-             
+             Console.WriteLine("Thanks for using the Chat Console!\nPress 'anykey' to quit.");
+             //keep window open
+             Console.ReadKey(); //blocking call
         }
     }
 }
