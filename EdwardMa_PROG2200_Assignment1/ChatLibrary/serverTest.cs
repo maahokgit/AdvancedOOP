@@ -10,7 +10,7 @@ namespace ChatLibrary
 {
     public class serverTest
     {
-        //some global variable to make the magic happen.
+        //some global variable to make the magic happen
         TcpListener server = new TcpListener(IPAddress.Parse("127.0.0.1"), 13000);
         TcpClient client;
         Byte[] data = new Byte[256];
