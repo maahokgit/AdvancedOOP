@@ -16,16 +16,19 @@ namespace ChatConsole
                 //server mode
                 serverTest server = new serverTest();
                 server.Start();
-                while(true)
+                while(true) //first while
                 {
+                    //waiting for connection
                     Console.WriteLine("Waiting For Connection");
                     if (server.Connect() == true)
                     {
+                        //connected!
                         Console.WriteLine("Connected to Client");
                     }
 
-                    while (true)
+                    while (true) //second while
                     {
+                        //checking for message...
                         string message = string.Empty;
                         message = server.DataResponse();
                         if (message != "quit" && message != null)
@@ -38,38 +41,86 @@ namespace ChatConsole
                             EndApp();
                         }
 
+                        //waiting for user to press something... and hoping it's I.
                         if (Console.KeyAvailable)
                         {
                             ConsoleKeyInfo pressedKey = Console.ReadKey(true);
                             if (pressedKey.Key == ConsoleKey.I)
                             {
                                 Console.Write(">>");
-                                //ReadLine example
+                                //prompt user to enter something.... if it's quit, it will jump to EndApp()
                                 string input = Console.ReadLine();
                                 if (input == "quit")
                                 {
+                                    server.Sent(input);
                                     EndApp();
                                 }
                                 else
                                 {
+                                    //sending message client... 
                                     server.Sent(input);
                                 }
                             }
                         }
-                    }
-                }
+                    } //end second while loop
+                } //end first while loop
             }
             else
             {
                 //client mode
-                Client client = new Client();
-                client.Connect();
-                //clientTest client = new clientTest();
-                //client.start();
+                //Client client = new Client();
+                //client.Connect();
+                clientTest client = new clientTest();
+                if (client.start() == true)
+                {
+                    Console.WriteLine("Connected to Server");
+                }
+                else
+                {
+                    Console.WriteLine("Not Server to Connect");
+                }
 
-            }
+                while (true) //second while
+                {
+                    //checking for message...
+                    string message = string.Empty;
+                    message = client.DataResponse();
+                    if (message != "quit" && message != null)
+                    {
+                        Console.Write("<<");
+                        Console.WriteLine("{0}", message);
+                    }
+                    else if (message == "quit")
+                    {
+                        EndApp();
+                    }
+
+                    //waiting for user to press something... and hoping it's I.
+                    if (Console.KeyAvailable)
+                    {
+                        ConsoleKeyInfo pressedKey = Console.ReadKey(true);
+                        if (pressedKey.Key == ConsoleKey.I)
+                        {
+                            Console.Write(">>");
+                            //prompt user to enter something.... if it's quit, it will jump to EndApp()
+                            string input = Console.ReadLine();
+                            if (input == "quit")
+                            {
+                                client.Sent(input);
+                                EndApp();
+                            }
+                            else
+                            {
+                                //sending message client... 
+                                client.Sent(input);
+                            }
+                        }
+                    }
+                } //end second while loop
+            } //end first while loop
         }
 
+        //a little method to end the program nicely...
         static void EndApp()
         {
             Console.WriteLine("Thanks for using the Chat Console!\nPress 'anykey' to quit.");

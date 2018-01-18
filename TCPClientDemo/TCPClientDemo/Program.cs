@@ -11,7 +11,7 @@ namespace TCPClientDemo
     {
         static void Main(string[] args)
         {
-            Connect("127.0.0.1", "HELLO!");
+            Connect("127.0.0.1", "HELLO000000000000000000000000!");
         }
 
         static void Connect(String server, String message)

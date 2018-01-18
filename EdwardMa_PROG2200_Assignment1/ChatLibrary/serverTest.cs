@@ -10,6 +10,7 @@ namespace ChatLibrary
 {
     public class serverTest
     {
+        //some global variable to make the magic happen.
         TcpListener server = new TcpListener(IPAddress.Parse("127.0.0.1"), 13000);
         TcpClient client;
         Byte[] data = new Byte[256];
@@ -17,20 +18,13 @@ namespace ChatLibrary
         
         public void Start()
         {
-            // TcpListener server = new TcpListener(port);
             // Start listening for client requests.
             server.Start();
-
-            // Buffer for reading data
-            //Byte[] data = new Byte[256];
-            //String responseData = String.Empty;
-            //string input = null;
         }
 
         public bool Connect()
         {
-            // Perform a blocking call to accept requests.
-            // You could also user server.AcceptSocket() here.
+            //connecting to client
             client = server.AcceptTcpClient();
             return true;
         }
@@ -38,8 +32,7 @@ namespace ChatLibrary
         public void Sent(string message)
         {
             NetworkStream stream = client.GetStream();
-            //Console.WriteLine(input);
-            data = System.Text.Encoding.ASCII.GetBytes(message);
+            data = Encoding.ASCII.GetBytes(message);
             // Send the message to the connected TcpServer. 
             stream.Write(data, 0, message.Length);
         }
@@ -47,10 +40,11 @@ namespace ChatLibrary
         public string DataResponse()
         {
             NetworkStream stream = client.GetStream();
+            //checking for message. if data stream is available... run if... 
             if (stream.DataAvailable)
             {
-                Int32 bytes = stream.Read(data, 0, data.Length); //breaking point...
-                responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                Int32 bytes = stream.Read(data, 0, data.Length);
+                responseData = Encoding.ASCII.GetString(data, 0, bytes);
                 return responseData;
             }
             return null;

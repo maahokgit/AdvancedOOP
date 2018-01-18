@@ -25,7 +25,7 @@ namespace ChatLibrary
                 if(stream.DataAvailable)
                 {
                     Int32 bytes = stream.Read(data, 0, data.Length); //breaking point...
-                    responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                    responseData = Encoding.ASCII.GetString(data, 0, bytes);
                     if (responseData == "quit")
                     {
                         break;
