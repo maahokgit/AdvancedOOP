@@ -24,9 +24,38 @@ namespace ChatConsole
                         Console.WriteLine("Connected to Client");
                     }
 
-                    while(true)
+                    while (true)
                     {
-                        server.Sent("from server");
+                        string message = string.Empty;
+                        message = server.DataResponse();
+                        if (message != "quit" && message != null)
+                        {
+                            Console.Write("<<");
+                            Console.WriteLine("{0}", message);
+                        }
+                        else if (message == "quit")
+                        {
+                            EndApp();
+                        }
+
+                        if (Console.KeyAvailable)
+                        {
+                            ConsoleKeyInfo pressedKey = Console.ReadKey(true);
+                            if (pressedKey.Key == ConsoleKey.I)
+                            {
+                                Console.Write(">>");
+                                //ReadLine example
+                                string input = Console.ReadLine();
+                                if (input == "quit")
+                                {
+                                    EndApp();
+                                }
+                                else
+                                {
+                                    server.Sent(input);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -46,6 +75,7 @@ namespace ChatConsole
             Console.WriteLine("Thanks for using the Chat Console!\nPress 'anykey' to quit.");
             //keep window open
             Console.ReadKey(); //blocking call
+            Environment.Exit(0);
         }
     }
 }

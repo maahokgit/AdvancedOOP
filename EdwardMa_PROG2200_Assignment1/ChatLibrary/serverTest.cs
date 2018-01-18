@@ -14,6 +14,7 @@ namespace ChatLibrary
         TcpClient client;
         Byte[] data = new Byte[256];
         String responseData = String.Empty;
+        
         public void Start()
         {
             // TcpListener server = new TcpListener(port);
@@ -41,6 +42,18 @@ namespace ChatLibrary
             data = System.Text.Encoding.ASCII.GetBytes(message);
             // Send the message to the connected TcpServer. 
             stream.Write(data, 0, message.Length);
+        }
+
+        public string DataResponse()
+        {
+            NetworkStream stream = client.GetStream();
+            if (stream.DataAvailable)
+            {
+                Int32 bytes = stream.Read(data, 0, data.Length); //breaking point...
+                responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                return responseData;
+            }
+            return null;
         }
     }
 }
