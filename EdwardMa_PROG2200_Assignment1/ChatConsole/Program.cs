@@ -62,14 +62,17 @@ namespace ChatConsole
                                 }
                             }
                         }
+                        Console.CancelKeyPress += delegate (object sender, ConsoleCancelEventArgs e)
+                        {
+                            server.Sent("quit");
+                            EndApp();
+                        };
                     } //end second while loop
                 } //end first while loop
             }
             else
             {
                 //client mode
-                //Client client = new Client();
-                //client.Connect();
                 clientTest client = new clientTest();
                 if (client.start() == true)
                 {
@@ -116,6 +119,11 @@ namespace ChatConsole
                             }
                         }
                     }
+                    Console.CancelKeyPress += delegate (object sender, ConsoleCancelEventArgs e)
+                    {
+                        client.Sent("quit");
+                        EndApp();
+                    };
                 } //end second while loop
             } //end first while loop
         }
