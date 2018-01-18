@@ -62,6 +62,8 @@ namespace ChatConsole
                                 }
                             }
                         }
+                        //from good old stackoverflow...
+                        //https://stackoverflow.com/questions/177856/how-do-i-trap-ctrl-c-in-a-c-sharp-console-app
                         Console.CancelKeyPress += delegate (object sender, ConsoleCancelEventArgs e)
                         {
                             server.Sent("quit");
@@ -119,6 +121,8 @@ namespace ChatConsole
                             }
                         }
                     }
+                    //from good old stackoverflow...
+                    //https://stackoverflow.com/questions/177856/how-do-i-trap-ctrl-c-in-a-c-sharp-console-app
                     Console.CancelKeyPress += delegate (object sender, ConsoleCancelEventArgs e)
                     {
                         client.Sent("quit");

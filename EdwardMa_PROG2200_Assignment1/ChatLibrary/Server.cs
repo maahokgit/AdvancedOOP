@@ -49,6 +49,7 @@ namespace ChatLibrary
                         }
                         Console.WriteLine("Received: {0}", responseData);
                     }
+                    else if (client.d)
 
                     if (Console.KeyAvailable)
                     {
