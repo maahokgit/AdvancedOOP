@@ -14,15 +14,38 @@ namespace ChatConsole
             if(args.Contains("-server"))
             {
                 //server mode
-                Server server = new Server();
-                server.start();
+                serverTest server = new serverTest();
+                server.Start();
+                while(true)
+                {
+                    Console.WriteLine("Waiting For Connection");
+                    if (server.Connect() == true)
+                    {
+                        Console.WriteLine("Connected to Client");
+                    }
+
+                    while(true)
+                    {
+                        server.Sent("from server");
+                    }
+                }
             }
             else
             {
                 //client mode
                 Client client = new Client();
                 client.Connect();
+                //clientTest client = new clientTest();
+                //client.start();
+
             }
+        }
+
+        static void EndApp()
+        {
+            Console.WriteLine("Thanks for using the Chat Console!\nPress 'anykey' to quit.");
+            //keep window open
+            Console.ReadKey(); //blocking call
         }
     }
 }
