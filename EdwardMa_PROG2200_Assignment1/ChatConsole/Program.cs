@@ -15,7 +15,7 @@ namespace ChatConsole
             {
                 //server mode
                 Server server = new Server();
-                server.main("From Server");
+                server.start();
             }
             else
             {

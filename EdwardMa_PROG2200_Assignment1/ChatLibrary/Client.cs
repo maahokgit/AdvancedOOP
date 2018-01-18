@@ -21,18 +21,25 @@ namespace ChatLibrary
 
                 // String to store the response ASCII representation.
                 String responseData = String.Empty;
-                //// Read the first batch of the TcpServer response bytes.
-                Int32 bytes = stream.Read(data, 0, data.Length); //breaking point...
-                responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                Console.WriteLine("Received: {0}", responseData);
+                /// Read the first batch of the TcpServer response bytes.
+                if(stream.DataAvailable)
+                {
+                    Int32 bytes = stream.Read(data, 0, data.Length); //breaking point...
+                    responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                    if (responseData == "quit")
+                    {
+                        break;
+                    }
+                    Console.WriteLine("Received: {0}", responseData);
+                }
+                
                 //check for key presses
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo pressedKey = Console.ReadKey(true);
                     if (pressedKey.Key == ConsoleKey.I)
                     {
-                        Console.WriteLine("You Pressed the I Key!!");
-                        Console.WriteLine("Please enter a string >>");
+                        Console.Write(">>");
                         //ReadLine example
                         string input = Console.ReadLine();
                         if (input == "quit")

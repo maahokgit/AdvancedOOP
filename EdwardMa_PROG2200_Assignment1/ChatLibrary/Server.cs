@@ -10,77 +10,88 @@ namespace ChatLibrary
 {
     public class Server
     {
-        public void main(string message)
+        public void start()
         {
-            TcpListener server = null;
-            try
+            // TcpListener server = new TcpListener(port);
+            TcpListener server = new TcpListener(IPAddress.Parse("127.0.0.1"), 13000);
+
+            // Start listening for client requests.
+            server.Start();
+
+            // Buffer for reading data
+            Byte[] data = new Byte[256];
+            String responseData = String.Empty;
+            string input = null;
+
+            while (true)
             {
-                // Set the TcpListener on port 13000.
-                Int32 port = 13000;
-                IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+                Console.Write("Waiting for a connection... ");
 
-                // TcpListener server = new TcpListener(port);
-                server = new TcpListener(localAddr, port);
+                // Perform a blocking call to accept requests.
+                // You could also user server.AcceptSocket() here.
+                TcpClient client = server.AcceptTcpClient();
+                Console.WriteLine("Connected!");
+                // Get a stream object for reading and writing
+                NetworkStream stream = client.GetStream();
 
-                // Start listening for client requests.
-                server.Start();
+                //int i;
 
-                // Buffer for reading data
-                Byte[] bytes = new Byte[256];
-                String data = null;
-
-                // Enter the listening loop.
+                // Loop to receive all the data sent by the client.
                 while (true)
                 {
-                    Console.Write("Waiting for a connection... ");
-
-                    // Perform a blocking call to accept requests.
-                    // You could also user server.AcceptSocket() here.
-                    TcpClient client = server.AcceptTcpClient();
-                    Console.WriteLine("\nConnected!");
-
-                    data = null;
-
-                    // Get a stream object for reading and writing
-                    NetworkStream stream = client.GetStream();
-
-                    int i;
-
-                    // Loop to receive all the data sent by the client.
-                    while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+                    if (stream.DataAvailable)
                     {
-                        // Translate data bytes to a ASCII string.
-                        data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-                        Console.WriteLine("Received: {0}", data);
-                        if (data == "quit")
+                        Int32 bytes = stream.Read(data, 0, data.Length); //breaking point...
+                        responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                        if (responseData == "quit")
                         {
                             break;
                         }
-                        // Process the data sent by the client.
-                        //data = data.ToUpper();
-
-                        byte[] msg = System.Text.Encoding.ASCII.GetBytes(message);
-
-                        // Send back a response.
-                        stream.Write(msg, 0, msg.Length);
-                        Console.WriteLine("Sent: {0}", message);
+                        Console.WriteLine("Received: {0}", responseData);
                     }
 
-                    // Shutdown and end connection
+                    if (Console.KeyAvailable)
+                    {
+                        ConsoleKeyInfo pressedKey = Console.ReadKey(true);
+                        if (pressedKey.Key == ConsoleKey.I)
+                        {
+                            Console.Write(">>");
+                            //ReadLine example
+                            input = Console.ReadLine();
+                            if (input == "quit")
+                            {
+                                data = System.Text.Encoding.ASCII.GetBytes(input);
+                                // Send the message to the connected TcpServer. 
+                                stream.Write(data, 0, input.Length);
+                                Console.WriteLine("Sent: {0}", input);
+                                break;
+                            }
+                            else
+                            {
+                                //Console.WriteLine(input);
+                                data = System.Text.Encoding.ASCII.GetBytes(input);
+                                // Send the message to the connected TcpServer. 
+                                stream.Write(data, 0, input.Length);
+                                Console.WriteLine("Sent: {0}", input);
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("You didn't press the I key...");
+                        }
+                    }
+                }
+                
+                // Shutdown and end connection
+                if (input == "quit")
+                {
                     client.Close();
+                    break;
                 }
             }
-            catch (SocketException e)
-            {
-                Console.WriteLine("SocketException: {0}", e);
-            }
-            finally
-            {
-                // Stop listening for new clients.
-                server.Stop();
-            }
-            Console.WriteLine("\nHit enter to continue...");
-            Console.Read();
+            Console.WriteLine("Thanks for using the Chat Console!\nPress 'anykey' to quit.");
+            //keep window open
+            Console.ReadKey(); //blocking call
         }
     }
 }
