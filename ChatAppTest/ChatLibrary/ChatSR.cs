@@ -5,33 +5,13 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatLibrary
+namespace ChatLibrary //trying to seperate but didn't work
 {
-    public class Client
+    public class ChatSR //SR for Sending and Recieving
     {
         TcpClient client;
         Byte[] data = new Byte[256];
         String responseData = String.Empty;
-        public bool start()
-        {
-            try
-            {
-                client = new TcpClient("127.0.0.1", 13000);
-                if (client.Connected == true)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch(SocketException)
-            {
-                return false;
-            }
-        }
-
         public void Sent(string message)
         {
             NetworkStream stream = client.GetStream();
