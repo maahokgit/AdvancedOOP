@@ -14,7 +14,7 @@ namespace ChatConsole
             if(args.Contains("-server"))
             {
                 //server mode
-                serverTest server = new serverTest();
+                Server server = new Server();
                 server.Start();
                 while(true) //first while
                 {
@@ -75,7 +75,7 @@ namespace ChatConsole
             else
             {
                 //client mode
-                clientTest client = new clientTest();
+                Client client = new Client();
                 if (client.start() == true)
                 {
                     Console.WriteLine("Connected to Server");
