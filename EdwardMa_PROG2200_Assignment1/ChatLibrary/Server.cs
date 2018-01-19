@@ -15,6 +15,10 @@ namespace ChatLibrary
         TcpClient client;
         Byte[] data = new Byte[256];
         String responseData = String.Empty;
+
+        /// <summary>
+        ///  function to start server
+        /// </summary>
         
         public void Start()
         {
@@ -22,6 +26,9 @@ namespace ChatLibrary
             server.Start();
         }
 
+        /// <summary>
+        /// main prog will run this in while loop, until it connects
+        /// </summary>
         public bool Connect()
         {
             //connecting to client
@@ -29,6 +36,9 @@ namespace ChatLibrary
             return true;
         }
 
+        /// <summary>
+        ///  this function sent messages.
+        /// </summary>
         public void Sent(string message)
         {
             NetworkStream stream = client.GetStream();
@@ -37,6 +47,9 @@ namespace ChatLibrary
             stream.Write(data, 0, message.Length);
         }
 
+        /// <summary>
+        ///  main prog will have this in 2nd while loop to check for msg from client.
+        /// </summary>
         public string DataResponse()
         {
             NetworkStream stream = client.GetStream();

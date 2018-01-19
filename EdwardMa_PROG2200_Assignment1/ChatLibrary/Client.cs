@@ -12,26 +12,18 @@ namespace ChatLibrary
         TcpClient client;
         Byte[] data = new Byte[256];
         String responseData = String.Empty;
-        public bool start()
+
+        /// <summary>
+        ///  function to connect to server
+        /// </summary>
+        public void start()
         {
-            try
-            {
-                client = new TcpClient("127.0.0.1", 13000);
-                if (client.Connected == true)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch(SocketException)
-            {
-                return false;
-            }
+               client = new TcpClient("127.0.0.1", 13000);
         }
 
+        /// <summary>
+        ///  function to send msg to server
+        /// </summary>
         public void Sent(string message)
         {
             NetworkStream stream = client.GetStream();
@@ -40,6 +32,9 @@ namespace ChatLibrary
             stream.Write(data, 0, message.Length);
         }
 
+        /// <summary>
+        /// main prog run this in 2nd while loop and wait for msg from server.
+        /// </summary>
         public string DataResponse()
         {
             NetworkStream stream = client.GetStream();
