@@ -8,11 +8,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TasksLib;
 
 namespace TaskExecutorUI
 {
     public partial class taskExecutorForm : Form
     {
+        TaskExecutor executor = new TaskExecutor();
         public taskExecutorForm()
         {
             InitializeComponent();
@@ -21,7 +23,7 @@ namespace TaskExecutorUI
         private void startBtn_Click(object sender, EventArgs e)
         {
             //define a worker thread for our Do Something method
-            Thread workerThread = new Thread(DoSomethingThatTakesAWhile);
+            Thread workerThread = new Thread(executor.DoSomethingThatTakesAWhile);
             workerThread.Name = "ProgressTread";
             workerThread.Start();
 
@@ -37,34 +39,6 @@ namespace TaskExecutorUI
         public void ExecuteSomeMethod()
         {
             //code in here to execute...
-        }
-
-        public void DoSomethingThatTakesAWhile()
-        {
-            //simulate doing something that takes a while
-            for (int i=1; i<=100; i++)
-            {
-                //simulate something that takes a bit of time
-                Thread.Sleep(100);
-
-                if(taskProgressBar.InvokeRequired)
-                {
-                    MethodInvoker invoker = new MethodInvoker
-                    (
-                        //anonymous function/method
-                        delegate()
-                        {
-                            taskProgressBar.Value = i;
-                        }
-                    );
-                    taskProgressBar.Invoke(invoker);
-                }
-                else
-                {
-                    //update the progress bar
-                    taskProgressBar.Value = i;
-                }
-            }
         }
     }
 }
