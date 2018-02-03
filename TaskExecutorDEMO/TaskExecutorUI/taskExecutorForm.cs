@@ -26,12 +26,17 @@ namespace TaskExecutorUI
             workerThread.Start();
 
             //Call the method
-            DoSomethingThatTakesAWhile();  //run on main (background, worker) thread
+            //DoSomethingThatTakesAWhile();  //run on main (background, worker) thread
         }
 
         private void taskProgressBar_Click(object sender, EventArgs e)
         {
             
+        }
+
+        public void ExecuteSomeMethod()
+        {
+            //code in here to execute...
         }
 
         public void DoSomethingThatTakesAWhile()
@@ -41,6 +46,24 @@ namespace TaskExecutorUI
             {
                 //simulate something that takes a bit of time
                 Thread.Sleep(100);
+
+                if(taskProgressBar.InvokeRequired)
+                {
+                    MethodInvoker invoker = new MethodInvoker
+                    (
+                        //anonymous function/method
+                        delegate()
+                        {
+                            taskProgressBar.Value = i;
+                        }
+                    );
+                    taskProgressBar.Invoke(invoker);
+                }
+                else
+                {
+                    //update the progress bar
+                    taskProgressBar.Value = i;
+                }
             }
         }
     }
