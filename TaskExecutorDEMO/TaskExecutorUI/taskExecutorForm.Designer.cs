@@ -38,6 +38,7 @@
             this.taskProgressBar.Name = "taskProgressBar";
             this.taskProgressBar.Size = new System.Drawing.Size(544, 23);
             this.taskProgressBar.TabIndex = 0;
+            this.taskProgressBar.Click += new System.EventHandler(this.taskProgressBar_Click);
             // 
             // startBtn
             // 
@@ -47,6 +48,7 @@
             this.startBtn.TabIndex = 1;
             this.startBtn.Text = "Start";
             this.startBtn.UseVisualStyleBackColor = true;
+            this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
             // 
             // taskExecutorForm
             // 
