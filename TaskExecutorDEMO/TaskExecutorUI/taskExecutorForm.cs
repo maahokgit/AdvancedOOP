@@ -17,7 +17,31 @@ namespace TaskExecutorUI
         TaskExecutor executor = new TaskExecutor();
         public taskExecutorForm()
         {
+            executor.ProgressChanged 
+                += new TasksLib.ProgressChangedEventHandler(Executor_ProgressChanged);
+
             InitializeComponent();
+        }
+
+        private void Executor_ProgressChanged(int progress)
+        {
+            if (taskProgressBar.InvokeRequired)
+            {
+                MethodInvoker invoker = new MethodInvoker
+                (
+                    //anonymous function/method
+                    delegate ()
+                    {
+                        taskProgressBar.Value = progress;
+                    }
+                );
+                taskProgressBar.Invoke(invoker);
+            }
+            else
+            {
+                //update the progress bar
+                taskProgressBar.Value = progress;
+            }
         }
 
         private void startBtn_Click(object sender, EventArgs e)

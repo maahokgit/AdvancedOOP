@@ -9,6 +9,8 @@ namespace TasksLib
 {
     public class TaskExecutor
     {
+        public event ProgressChangedEventHandler ProgressChanged;
+
         public void DoSomethingThatTakesAWhile()
         {
             //simulate doing something that takes a while
@@ -17,23 +19,12 @@ namespace TasksLib
                 //simulate something that takes a bit of time
                 Thread.Sleep(100);
 
-                //if (taskProgressBar.InvokeRequired)
-                //{
-                //    MethodInvoker invoker = new MethodInvoker
-                //    (
-                //        //anonymous function/method
-                //        delegate ()
-                //        {
-                //            taskProgressBar.Value = i;
-                //        }
-                //    );
-                //    taskProgressBar.Invoke(invoker);
-                //}
-                //else
-                //{
-                //    //update the progress bar
-                //    taskProgressBar.Value = i;
-                //}
+                //raise an event to broadcast that progress has been
+                //updated / changed
+                if(ProgressChanged != null)
+                {
+                    ProgressChanged(i);
+                }
             }
 
         }
