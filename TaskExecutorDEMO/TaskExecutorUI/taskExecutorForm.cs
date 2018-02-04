@@ -12,15 +12,43 @@ using TasksLib;
 
 namespace TaskExecutorUI
 {
+    
+  
     public partial class taskExecutorForm : Form
     {
+        Thread workerThread;
         TaskExecutor executor = new TaskExecutor();
+
         public taskExecutorForm()
         {
             executor.ProgressChanged 
                 += new TasksLib.ProgressChangedEventHandler(Executor_ProgressChanged);
 
+            executor.TaskCompleted 
+                += new TasksLib.TaskCompletedEventHandler(Executor_TaskCompleted);
+
             InitializeComponent();
+        }
+
+        private void Executor_TaskCompleted()
+        {
+            //re-enable the button
+            if (startBtn.InvokeRequired)
+            {
+                MethodInvoker invoker = new MethodInvoker
+                (
+                    //anonymous function/method
+                    delegate ()
+                    {
+                        startBtn.Enabled = true;
+                    }
+                );
+                startBtn.Invoke(invoker);
+            }
+            else
+            {
+                startBtn.Enabled = true;
+            }
         }
 
         private void Executor_ProgressChanged(int progress)
@@ -47,22 +75,35 @@ namespace TaskExecutorUI
         private void startBtn_Click(object sender, EventArgs e)
         {
             //define a worker thread for our Do Something method
-            Thread workerThread = new Thread(executor.DoSomethingThatTakesAWhile);
+            workerThread = new Thread(executor.DoSomethingThatTakesAWhile);
             workerThread.Name = "ProgressTread";
             workerThread.Start();
+
+            //disable the button
+            startBtn.Enabled = false;
+
+            cancelBtn.Enabled = true;
 
             //Call the method
             //DoSomethingThatTakesAWhile();  //run on main (background, worker) thread
         }
 
-        private void taskProgressBar_Click(object sender, EventArgs e)
+        private void cancelBtn_Click(object sender, EventArgs e)
         {
-            
+            //prematurely cancel the worker thread, that stops running before it finishes
+            //workerThread.Abort(); <-- don't do this
+            executor.StopExecution = true;
+            cancelBtn.Enabled = false;
         }
 
-        public void ExecuteSomeMethod()
+        private void taskExecutorForm_Load(object sender, EventArgs e)
         {
-            //code in here to execute...
+
+        }
+
+        private void taskExecutorForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
         }
     }
 }
