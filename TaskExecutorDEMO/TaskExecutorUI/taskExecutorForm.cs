@@ -43,7 +43,7 @@ namespace TaskExecutorUI
                         startBtn.Enabled = true;
                     }
                 );
-                startBtn.Invoke(invoker);
+                startBtn.BeginInvoke(invoker);
             }
             else
             {
@@ -63,7 +63,7 @@ namespace TaskExecutorUI
                         taskProgressBar.Value = progress;
                     }
                 );
-                taskProgressBar.Invoke(invoker);
+                taskProgressBar.BeginInvoke(invoker);
             }
             else
             {
@@ -96,14 +96,14 @@ namespace TaskExecutorUI
             cancelBtn.Enabled = false;
         }
 
-        private void taskExecutorForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void taskExecutorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            if(workerThread != null && workerThread.IsAlive)
+            {
+                //set the worker thread flag to finish
+                executor.StopExecution = true;
+                workerThread.Join();
+            }            
         }
     }
 }

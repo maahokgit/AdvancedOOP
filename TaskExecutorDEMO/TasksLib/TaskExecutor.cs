@@ -14,8 +14,9 @@ namespace TasksLib
         public Boolean StopExecution; //default is false
         public void DoSomethingThatTakesAWhile()
         {
+            int i;
             //simulate doing something that takes a while
-            for (int i = 1; i <= 100; i++)
+            for (i = 1; i <= 100; i++)
             {
                 if(!StopExecution)
                 {
@@ -38,8 +39,8 @@ namespace TasksLib
             //do any clean up... close connection...before method complete
 
 
-            if(TaskCompleted != null)
-            {
+            if(TaskCompleted != null && i > 100)
+            { 
                 TaskCompleted();
             }
             

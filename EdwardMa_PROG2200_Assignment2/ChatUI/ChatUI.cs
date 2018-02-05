@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ChatUI
 {
-    public partial class Form1 : Form
+    public partial class ChatUI : Form
     {
-        public Form1()
+        public ChatUI()
         {
             InitializeComponent();
         }
