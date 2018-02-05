@@ -58,6 +58,7 @@
             this.sendBtn.TabIndex = 2;
             this.sendBtn.Text = "Send";
             this.sendBtn.UseVisualStyleBackColor = true;
+            this.sendBtn.Click += new System.EventHandler(this.sendBtn_Click);
             // 
             // ChatUI
             // 
@@ -69,6 +70,7 @@
             this.Controls.Add(this.sendBox);
             this.Name = "ChatUI";
             this.Text = "Chat Window";
+            this.Load += new System.EventHandler(this.ChatUI_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

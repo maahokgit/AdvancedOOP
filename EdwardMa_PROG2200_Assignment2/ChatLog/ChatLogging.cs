@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ChatLog
 {
-    public class Class1
+    public class ChatLogging
     {
+        //file IO, read from chatBox and put into txt file
     }
 }

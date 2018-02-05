@@ -16,5 +16,19 @@ namespace ChatUI
         {
             InitializeComponent();
         }
+
+        private void ChatUI_Load(object sender, EventArgs e)
+        {
+            //connect to server
+            
+            //(seperate thread) and check for messages
+
+            //if there is a message, show it on chatBox
+        }
+
+        private void sendBtn_Click(object sender, EventArgs e)
+        {
+            //grab text from sendBox, and sent it to server
+        }
     }
 }

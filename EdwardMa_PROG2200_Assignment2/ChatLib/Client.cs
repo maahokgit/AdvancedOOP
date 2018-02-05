@@ -5,25 +5,39 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatLibrary //trying to seperate but didn't work
+namespace ChatLib
 {
-    public class ChatSR //SR for Sending and Recieving
+    class Client
     {
+
         TcpClient client;
         Byte[] data = new Byte[256];
         String responseData = String.Empty;
-        public void Sent(string message)
+
+        /// <summary>
+        ///  function to connect to server
+        /// </summary>
+        public void start()
         {
             client = new TcpClient("127.0.0.1", 13000);
+        }
+
+        /// <summary>
+        ///  function to send msg to server
+        /// </summary>
+        public void SentMessage(string message)
+        {
             NetworkStream stream = client.GetStream();
             data = Encoding.ASCII.GetBytes(message);
             // Send the message to the connected TcpServer. 
             stream.Write(data, 0, message.Length);
         }
 
-        public string DataResponse()
+        /// <summary>
+        /// main prog run this in 2nd while loop and wait for msg from server.
+        /// </summary>
+        public string RecievedMessage()
         {
-            client = new TcpClient("127.0.0.1", 13000);
             NetworkStream stream = client.GetStream();
             //checking for message. if data stream is available... run if... 
             if (stream.DataAvailable)
