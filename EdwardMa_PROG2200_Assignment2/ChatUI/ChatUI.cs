@@ -22,13 +22,20 @@ namespace ChatUI
             //connect to server
             
             //(seperate thread) and check for messages
-
             //if there is a message, show it on chatBox
+
+            //(seperate thread?) log messages
         }
 
         private void sendBtn_Click(object sender, EventArgs e)
         {
             //grab text from sendBox, and sent it to server
+        }
+
+        private void ChatUI_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //make sure all thread is completed
+            //and closed gracefully
         }
     }
 }

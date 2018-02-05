@@ -70,6 +70,7 @@
             this.Controls.Add(this.sendBox);
             this.Name = "ChatUI";
             this.Text = "Chat Window";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChatUI_FormClosing);
             this.Load += new System.EventHandler(this.ChatUI_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
