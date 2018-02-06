@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace ChatLib
 {
-    class Client
+    public class Client
     {
-
         TcpClient client;
-        Byte[] data = new Byte[256];
+        Byte[] data = new Byte[1500];
         String responseData = String.Empty;
 
         /// <summary>

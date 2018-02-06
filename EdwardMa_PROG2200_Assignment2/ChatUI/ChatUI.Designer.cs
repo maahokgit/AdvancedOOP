@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.sendBox = new System.Windows.Forms.TextBox();
-            this.chatBox = new System.Windows.Forms.TextBox();
             this.sendBtn = new System.Windows.Forms.Button();
+            this.chatBox = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // sendBox
@@ -39,16 +39,6 @@
             this.sendBox.Name = "sendBox";
             this.sendBox.Size = new System.Drawing.Size(516, 20);
             this.sendBox.TabIndex = 0;
-            // 
-            // chatBox
-            // 
-            this.chatBox.BackColor = System.Drawing.SystemColors.Control;
-            this.chatBox.Location = new System.Drawing.Point(12, 12);
-            this.chatBox.Multiline = true;
-            this.chatBox.Name = "chatBox";
-            this.chatBox.ReadOnly = true;
-            this.chatBox.Size = new System.Drawing.Size(597, 428);
-            this.chatBox.TabIndex = 1;
             // 
             // sendBtn
             // 
@@ -60,13 +50,21 @@
             this.sendBtn.UseVisualStyleBackColor = true;
             this.sendBtn.Click += new System.EventHandler(this.sendBtn_Click);
             // 
+            // chatBox
+            // 
+            this.chatBox.FormattingEnabled = true;
+            this.chatBox.Location = new System.Drawing.Point(12, 12);
+            this.chatBox.Name = "chatBox";
+            this.chatBox.Size = new System.Drawing.Size(597, 420);
+            this.chatBox.TabIndex = 3;
+            // 
             // ChatUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(621, 478);
-            this.Controls.Add(this.sendBtn);
             this.Controls.Add(this.chatBox);
+            this.Controls.Add(this.sendBtn);
             this.Controls.Add(this.sendBox);
             this.Name = "ChatUI";
             this.Text = "Chat Window";
@@ -80,8 +78,8 @@
         #endregion
 
         private System.Windows.Forms.TextBox sendBox;
-        private System.Windows.Forms.TextBox chatBox;
         private System.Windows.Forms.Button sendBtn;
+        private System.Windows.Forms.ListBox chatBox;
     }
 }
 
