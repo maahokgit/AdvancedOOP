@@ -9,9 +9,12 @@ namespace ChatLib
 {
     public class Client
     {
+        public Boolean checkConnection = true;
         TcpClient client;
-        Byte[] data = new Byte[1500];
+        Byte[] data = new Byte[256];
         String responseData = String.Empty;
+
+        public event MessageRecieveEventArgs EventMsg;
 
         /// <summary>
         ///  function to connect to server
@@ -20,6 +23,24 @@ namespace ChatLib
         {
             client = new TcpClient("127.0.0.1", 13000);
         }
+
+
+        public bool tart(out string eMessage)
+        {
+            try
+            {
+                eMessage = String.Empty;
+                client = new TcpClient("127.0.0.1", 13000);
+                return true;
+            }
+            catch (SocketException e)
+            {
+                eMessage = e.Message;
+                return false;
+            }
+            
+        }
+
 
         /// <summary>
         ///  function to send msg to server
@@ -35,17 +56,38 @@ namespace ChatLib
         /// <summary>
         /// main prog run this in 2nd while loop and wait for msg from server.
         /// </summary>
-        public string RecievedMessage()
+        //public string RecievedMessage()
+        //{
+        //    NetworkStream stream = client.GetStream();
+        //    //checking for message. if data stream is available... run if... 
+        //    if (stream.DataAvailable)
+        //    {
+        //        Int32 bytes = stream.Read(data, 0, data.Length);
+        //        responseData = Encoding.ASCII.GetString(data, 0, bytes);
+        //        return responseData;
+        //    }
+        //    return null;
+        //}
+
+        public void RecievedMessage()
         {
             NetworkStream stream = client.GetStream();
             //checking for message. if data stream is available... run if... 
-            if (stream.DataAvailable)
+            while (checkConnection == true)
             {
-                Int32 bytes = stream.Read(data, 0, data.Length);
-                responseData = Encoding.ASCII.GetString(data, 0, bytes);
-                return responseData;
+                if (stream.DataAvailable)
+                {
+                    Int32 bytes = stream.Read(data, 0, data.Length);
+                    responseData = Encoding.ASCII.GetString(data, 0, bytes);
+                    //run delegate 
+
+                    if(EventMsg != null)
+                    {
+                        EventMsg(this, new MessageRecieved(responseData)); 
+                    }
+                }
             }
-            return null;
+
         }
     }
 }

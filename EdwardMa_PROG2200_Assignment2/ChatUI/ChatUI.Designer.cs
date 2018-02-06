@@ -31,6 +31,7 @@
             this.sendBox = new System.Windows.Forms.TextBox();
             this.sendBtn = new System.Windows.Forms.Button();
             this.chatBox = new System.Windows.Forms.ListBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.SuspendLayout();
             // 
             // sendBox
@@ -58,6 +59,14 @@
             this.chatBox.Size = new System.Drawing.Size(597, 420);
             this.chatBox.TabIndex = 3;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(621, 24);
+            this.menuStrip1.TabIndex = 4;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
             // ChatUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -66,6 +75,8 @@
             this.Controls.Add(this.chatBox);
             this.Controls.Add(this.sendBtn);
             this.Controls.Add(this.sendBox);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "ChatUI";
             this.Text = "Chat Window";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChatUI_FormClosing);
@@ -80,6 +91,7 @@
         private System.Windows.Forms.TextBox sendBox;
         private System.Windows.Forms.Button sendBtn;
         private System.Windows.Forms.ListBox chatBox;
+        private System.Windows.Forms.MenuStrip menuStrip1;
     }
 }
 
