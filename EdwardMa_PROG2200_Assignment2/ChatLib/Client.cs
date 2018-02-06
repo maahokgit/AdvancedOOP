@@ -37,9 +37,7 @@ namespace ChatLib
                 eMessage = e.Message;
                 return false;
             }
-            
         }
-
 
         /// <summary>
         ///  function to send msg to server
