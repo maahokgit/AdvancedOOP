@@ -52,19 +52,19 @@ namespace ChatUI
 
         private void ChatUI_Load(object sender, EventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 //connect to server
-                client.start();
-                chatBox.Items.Add("Connected to Server");
-                //(seperate thread) and check for messages
-                checkingMessage = new Thread(client.RecievedMessage);
-                checkingMessage.Name = "messageThread";
-                checkingMessage.Start();
+                    //client.start();
+                    //chatBox.Items.Add("Connected to Server");
+                    ////(seperate thread) and check for messages
+                    //checkingMessage = new Thread(client.RecievedMessage);
+                    //checkingMessage.Name = "messageThread";
+                    //checkingMessage.Start();
                 //if there is a message, show it on chatBox
 
 
-                if(client.tart(out eM))
+                if(client.start(out eM))
                 {
                     chatBox.Items.Add("Connected to Server");
                 }
@@ -72,17 +72,12 @@ namespace ChatUI
                 {
                     chatBox.Items.Add(eM);
                 }
-            }
-            catch
-            {
-                chatBox.Items.Add("Server not connected.");
-                chatBox.Items.Add("Please try again later.");
-            }
+
         }
 
         private void sendBtn_Click(object sender, EventArgs e)
         {
-            //grab text from sendBox, and sent it to server
+            //grab text from sendBox, sent it to server, and add it to chatBox
             client.SentMessage(sendBox.Text);
 
             chatBox.Items.Add("Me: " + sendBox.Text);

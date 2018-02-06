@@ -19,13 +19,12 @@ namespace ChatLib
         /// <summary>
         ///  function to connect to server
         /// </summary>
-        public void start()
-        {
-            client = new TcpClient("127.0.0.1", 13000);
-        }
+        //public void start()
+        //{
+        //    client = new TcpClient("127.0.0.1", 13000);
+        //}
 
-
-        public bool tart(out string eMessage)
+        public bool start(out string eMessage)
         {
             try
             {
@@ -56,18 +55,19 @@ namespace ChatLib
         /// <summary>
         /// main prog run this in 2nd while loop and wait for msg from server.
         /// </summary>
-        //public string RecievedMessage()
-        //{
-        //    NetworkStream stream = client.GetStream();
-        //    //checking for message. if data stream is available... run if... 
-        //    if (stream.DataAvailable)
-        //    {
-        //        Int32 bytes = stream.Read(data, 0, data.Length);
-        //        responseData = Encoding.ASCII.GetString(data, 0, bytes);
-        //        return responseData;
-        //    }
-        //    return null;
-        //}
+            //old code from assignment 1
+            //public string RecievedMessage()
+            //{
+            //    NetworkStream stream = client.GetStream();
+            //    //checking for message. if data stream is available... run if... 
+            //    if (stream.DataAvailable)
+            //    {
+            //        Int32 bytes = stream.Read(data, 0, data.Length);
+            //        responseData = Encoding.ASCII.GetString(data, 0, bytes);
+            //        return responseData;
+            //    }
+            //    return null;
+            //}
 
         public void RecievedMessage()
         {
