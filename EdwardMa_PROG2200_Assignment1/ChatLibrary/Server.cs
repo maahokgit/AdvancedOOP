@@ -13,7 +13,7 @@ namespace ChatLibrary
         //some global variable to make the magic happen
         TcpListener server = new TcpListener(IPAddress.Parse("127.0.0.1"), 13000);
         TcpClient client;
-        Byte[] data = new Byte[1500];
+        Byte[] data = new Byte[256];
         String responseData = String.Empty;
 
         /// <summary>

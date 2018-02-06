@@ -18,11 +18,35 @@ namespace ChatUI
         Client client = new Client();
         Thread checkingMessage;
         string eM;
+
         public ChatUI()
         {
             InitializeComponent();
 
             client.EventMsg += new ChatLib.MessageRecieveEventArgs(CheckingMessage);
+            client.DisconEventMsg += new ChatLib.ServerDisconnectEventArgs(ServerDisconnect);
+        }
+
+        private void ServerDisconnect(object sender, DisconnectMsg e)
+        {
+            if (chatBox.InvokeRequired)
+            {
+                //yes we are!....invoke required
+                MethodInvoker invoker = new MethodInvoker(
+                    //anonymous function/method
+                    delegate ()
+                    {
+                        chatBox.Items.Add(e.DisconMsg);
+                    }
+                );
+                chatBox.BeginInvoke(invoker); //avoid deadlock
+            }
+            else
+            {
+                //no we're not...no cross-thread scenario
+                //it's business as usual
+                chatBox.Items.Add(e.DisconMsg);
+            }
         }
 
         private void CheckingMessage(object sender, MessageRecieved e)
@@ -37,9 +61,7 @@ namespace ChatUI
                         chatBox.Items.Add("Server: " + e.GetMsg);
                     }
                 );
-                //taskProgressBar.Invoke(invoker);
                 chatBox.BeginInvoke(invoker); //avoid deadlock
-
             }
             else
             {
@@ -47,50 +69,56 @@ namespace ChatUI
                 //it's business as usual
                 chatBox.Items.Add("Server: " + e.GetMsg);
             }
-
         }
 
         private void ChatUI_Load(object sender, EventArgs e)
         {
-            //try
-            //{
-                //connect to server
-                    //client.start();
-                    //chatBox.Items.Add("Connected to Server");
-                    ////(seperate thread) and check for messages
-                    //checkingMessage = new Thread(client.RecievedMessage);
-                    //checkingMessage.Name = "messageThread";
-                    //checkingMessage.Start();
-                //if there is a message, show it on chatBox
-
-
                 if(client.start(out eM))
                 {
-                    chatBox.Items.Add("Connected to Server");
+                    chatBox.Items.Add(eM);
+                    checkingMessage = new Thread(client.RecievedMessage);
+                    checkingMessage.Name = "messageThread";
+                    checkingMessage.Start();
                 }
                 else
                 {
                     chatBox.Items.Add(eM);
                 }
-
         }
 
         private void sendBtn_Click(object sender, EventArgs e)
         {
             //grab text from sendBox, sent it to server, and add it to chatBox
             client.SentMessage(sendBox.Text);
-
             chatBox.Items.Add("Me: " + sendBox.Text);
             sendBox.Text = "";
         }
 
         private void ChatUI_FormClosing(object sender, FormClosingEventArgs e)
         {
+            ChatLog();
             if(checkingMessage != null && checkingMessage.IsAlive)
             {
                 client.checkConnection = false;
                 checkingMessage.Join();
             }
+        }
+
+        private void ChatLog()
+        {
+            DateTime thisDay = DateTime.Today;
+            string fileName = thisDay.ToString("D") + ".txt";
+            //const string sPath = fileName;
+
+            System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(fileName);
+            foreach (var item in chatBox.Items)
+            {
+                SaveFile.WriteLine(item);
+            }
+
+            SaveFile.Close();
+
+            MessageBox.Show("Chat saved!");
         }
     }
 }

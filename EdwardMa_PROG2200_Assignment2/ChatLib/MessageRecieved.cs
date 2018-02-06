@@ -8,6 +8,10 @@
             GetMsg = msg;
         }
 
-        public string GetMsg { get; }
+        public string GetMsg
+        {
+            get;
+        }
+
     }
 }

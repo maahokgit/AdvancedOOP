@@ -13,22 +13,18 @@ namespace ChatLib
         TcpClient client;
         Byte[] data = new Byte[256];
         String responseData = String.Empty;
-
+        string eM;
         public event MessageRecieveEventArgs EventMsg;
+        public event ServerDisconnectEventArgs DisconEventMsg;
 
         /// <summary>
         ///  function to connect to server
         /// </summary>
-        //public void start()
-        //{
-        //    client = new TcpClient("127.0.0.1", 13000);
-        //}
-
         public bool start(out string eMessage)
         {
             try
             {
-                eMessage = String.Empty;
+                eMessage = "Connected to Server";
                 client = new TcpClient("127.0.0.1", 13000);
                 return true;
             }
@@ -44,48 +40,56 @@ namespace ChatLib
         /// </summary>
         public void SentMessage(string message)
         {
-            NetworkStream stream = client.GetStream();
-            data = Encoding.ASCII.GetBytes(message);
-            // Send the message to the connected TcpServer. 
-            stream.Write(data, 0, message.Length);
+            try
+            {
+                NetworkStream stream = client.GetStream();
+                data = Encoding.ASCII.GetBytes(message);
+                // Send the message to the connected TcpServer. 
+                try
+                {
+                    stream.Write(data, 0, message.Length);
+                }
+                catch (System.IO.IOException e)
+                {
+                    DisconEventMsg(this, new DisconnectMsg("Server Disconnected"));
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                DisconEventMsg(this, new DisconnectMsg("Server Disconnected"));
+            }
+            
+            
         }
 
         /// <summary>
-        /// main prog run this in 2nd while loop and wait for msg from server.
+        /// multi thread method to check message.
         /// </summary>
-            //old code from assignment 1
-            //public string RecievedMessage()
-            //{
-            //    NetworkStream stream = client.GetStream();
-            //    //checking for message. if data stream is available... run if... 
-            //    if (stream.DataAvailable)
-            //    {
-            //        Int32 bytes = stream.Read(data, 0, data.Length);
-            //        responseData = Encoding.ASCII.GetString(data, 0, bytes);
-            //        return responseData;
-            //    }
-            //    return null;
-            //}
-
         public void RecievedMessage()
         {
-            NetworkStream stream = client.GetStream();
-            //checking for message. if data stream is available... run if... 
-            while (checkConnection == true)
+            try
             {
-                if (stream.DataAvailable)
+                NetworkStream stream = client.GetStream();
+                //checking for message. if data stream is available... run if... 
+                while (checkConnection == true)
                 {
-                    Int32 bytes = stream.Read(data, 0, data.Length);
-                    responseData = Encoding.ASCII.GetString(data, 0, bytes);
-                    //run delegate 
-
-                    if(EventMsg != null)
+                    if (stream.DataAvailable)
                     {
-                        EventMsg(this, new MessageRecieved(responseData)); 
+                        Int32 bytes = stream.Read(data, 0, data.Length);
+                        responseData = Encoding.ASCII.GetString(data, 0, bytes);
+                        //run delegate 
+
+                        if(EventMsg != null)
+                        {
+                            EventMsg(this, new MessageRecieved(responseData)); 
+                        }
                     }
                 }
             }
-
+            catch(InvalidOperationException e)
+            {
+                DisconEventMsg(this, new DisconnectMsg("Server Disconnected"));
+            }
         }
     }
 }
