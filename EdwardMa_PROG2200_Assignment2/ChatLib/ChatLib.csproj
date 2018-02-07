@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChatLogging.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Delegate.cs" />
     <Compile Include="DisconnectMsg.cs" />
