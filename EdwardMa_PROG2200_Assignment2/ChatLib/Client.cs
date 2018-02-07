@@ -13,7 +13,6 @@ namespace ChatLib
         TcpClient client;
         Byte[] data = new Byte[256];
         String responseData = String.Empty;
-        string eM;
         public event MessageRecieveEventArgs EventMsg;
         public event ServerDisconnectEventArgs DisconEventMsg;
 
@@ -36,6 +35,33 @@ namespace ChatLib
         }
 
         /// <summary>
+        /// Function to close the connection
+        /// </summary>
+        /// <param name="eMessage"></param>
+        /// <returns></returns>
+        public bool close(out string eMessage)
+        {
+            try
+            {
+                eMessage = "Disconnected from Server";
+                client.Close();
+                return true;
+            }
+            catch (SocketException e)
+            {
+                eMessage = e.Message;
+                return false;
+            }
+            catch(NullReferenceException e)
+            {
+                eMessage = e.Message;
+                return false;
+            }
+                
+              
+        }
+
+        /// <summary>
         ///  function to send msg to server
         /// </summary>
         public void SentMessage(string message)
@@ -51,15 +77,17 @@ namespace ChatLib
                 }
                 catch (System.IO.IOException e)
                 {
-                    DisconEventMsg(this, new DisconnectMsg("Server Disconnected"));
+                    DisconEventMsg(this, new DisconnectMsg(e.Message));
                 }
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException e)
             {
-                DisconEventMsg(this, new DisconnectMsg("Server Disconnected"));
+                DisconEventMsg(this, new DisconnectMsg(e.Message));
             }
-            
-            
+            catch (NullReferenceException e)
+            {
+                DisconEventMsg(this, new DisconnectMsg(e.Message));
+            }
         }
 
         /// <summary>
@@ -88,7 +116,7 @@ namespace ChatLib
             }
             catch(InvalidOperationException e)
             {
-                DisconEventMsg(this, new DisconnectMsg("Server Disconnected"));
+                DisconEventMsg(this, new DisconnectMsg(e.Message));
             }
         }
     }

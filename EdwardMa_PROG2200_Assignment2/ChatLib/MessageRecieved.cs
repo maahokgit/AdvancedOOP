@@ -2,7 +2,6 @@
 {
     public class MessageRecieved
     {
-
         public MessageRecieved(string msg)
         {
             GetMsg = msg;
@@ -12,6 +11,5 @@
         {
             get;
         }
-
     }
 }

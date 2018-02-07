@@ -73,17 +73,7 @@ namespace ChatUI
 
         private void ChatUI_Load(object sender, EventArgs e)
         {
-                if(client.start(out eM))
-                {
-                    chatBox.Items.Add(eM);
-                    checkingMessage = new Thread(client.RecievedMessage);
-                    checkingMessage.Name = "messageThread";
-                    checkingMessage.Start();
-                }
-                else
-                {
-                    chatBox.Items.Add(eM);
-                }
+
         }
 
         private void sendBtn_Click(object sender, EventArgs e)
@@ -119,6 +109,36 @@ namespace ChatUI
             SaveFile.Close();
 
             MessageBox.Show("Chat saved!");
+        }
+
+        //network menu item to connect to server
+        private void connectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (client.start(out eM))
+            {
+                chatBox.Items.Add(eM);
+                checkingMessage = new Thread(client.RecievedMessage);
+                checkingMessage.Name = "messageThread";
+                checkingMessage.Start();
+            }
+            else
+            {
+                chatBox.Items.Add(eM);
+            }
+
+        }
+
+        //network menu item to disconnect
+        private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (client.close(out eM))
+            {
+                chatBox.Items.Add(eM);
+            }
+            else
+            {
+                chatBox.Items.Add(eM);
+            }
         }
     }
 }
