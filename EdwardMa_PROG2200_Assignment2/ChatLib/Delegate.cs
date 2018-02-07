@@ -2,6 +2,6 @@
 
 namespace ChatLib
 {
-    public delegate void MessageRecieveEventArgs(object sender, MessageRecieved e);
-    public delegate void ServerDisconnectEventArgs(object sender, DisconnectMsg e);
+    public delegate void MessageRecieveEventArgs(object sender, MessageRecievedEventArgs e);
+    public delegate void ServerDisconnectEventArgs(object sender, DisconnectMsgEventArgs e);
 }

@@ -19,12 +19,12 @@ namespace ChatLib
         /// <summary>
         ///  function to connect to server
         /// </summary>
-        public bool start(out string eMessage)
+        public bool Start(out string eMessage)
         {
             try
             {
                 eMessage = "Connected to Server";
-                client = new TcpClient("127.0.0.1", 13000);
+                client = new TcpClient("127.0.0.1", 1234);
                 return true;
             }
             catch (SocketException e)
@@ -39,7 +39,7 @@ namespace ChatLib
         /// </summary>
         /// <param name="eMessage"></param>
         /// <returns></returns>
-        public bool close(out string eMessage)
+        public bool Close(out string eMessage)
         {
             try
             {
@@ -62,8 +62,9 @@ namespace ChatLib
         }
 
         /// <summary>
-        ///  function to send msg to server
+        /// Function that send message to the server
         /// </summary>
+        /// <param name="message"></param>
         public void SentMessage(string message)
         {
             try
@@ -77,16 +78,16 @@ namespace ChatLib
                 }
                 catch (System.IO.IOException e)
                 {
-                    DisconEventMsg(this, new DisconnectMsg(e.Message));
+                    DisconEventMsg(this, new DisconnectMsgEventArgs(e.Message));
                 }
             }
             catch (InvalidOperationException e)
             {
-                DisconEventMsg(this, new DisconnectMsg(e.Message));
+                DisconEventMsg(this, new DisconnectMsgEventArgs(e.Message));
             }
             catch (NullReferenceException e)
             {
-                DisconEventMsg(this, new DisconnectMsg(e.Message));
+                DisconEventMsg(this, new DisconnectMsgEventArgs(e.Message));
             }
         }
 
@@ -109,14 +110,14 @@ namespace ChatLib
 
                         if(EventMsg != null)
                         {
-                            EventMsg(this, new MessageRecieved(responseData)); 
+                            EventMsg(this, new MessageRecievedEventArgs(responseData)); 
                         }
                     }
                 }
             }
             catch(InvalidOperationException e)
             {
-                DisconEventMsg(this, new DisconnectMsg(e.Message));
+                DisconEventMsg(this, new DisconnectMsgEventArgs(e.Message));
             }
         }
     }

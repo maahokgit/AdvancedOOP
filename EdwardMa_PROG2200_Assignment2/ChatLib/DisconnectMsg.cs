@@ -1,8 +1,8 @@
 ﻿namespace ChatLib
 {
-    public class DisconnectMsg
+    public class DisconnectMsgEventArgs
     {
-        public DisconnectMsg(string msg)
+        public DisconnectMsgEventArgs(string msg)
         {
             DisconMsg = msg;
         }

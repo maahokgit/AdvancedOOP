@@ -1,8 +1,8 @@
 ﻿namespace ChatLib
 {
-    public class MessageRecieved
+    public class MessageRecievedEventArgs
     {
-        public MessageRecieved(string msg)
+        public MessageRecievedEventArgs(string msg)
         {
             GetMsg = msg;
         }

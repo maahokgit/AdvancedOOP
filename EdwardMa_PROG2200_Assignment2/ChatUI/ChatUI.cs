@@ -27,7 +27,7 @@ namespace ChatUI
             client.DisconEventMsg += new ChatLib.ServerDisconnectEventArgs(ServerDisconnect);
         }
 
-        private void ServerDisconnect(object sender, DisconnectMsg e)
+        private void ServerDisconnect(object sender, DisconnectMsgEventArgs e)
         {
             if (chatBox.InvokeRequired)
             {
@@ -49,7 +49,7 @@ namespace ChatUI
             }
         }
 
-        private void CheckingMessage(object sender, MessageRecieved e)
+        private void CheckingMessage(object sender, MessageRecievedEventArgs e)
         {
             if (chatBox.InvokeRequired)
             {
@@ -114,7 +114,7 @@ namespace ChatUI
         //network menu item to connect to server
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (client.start(out eM))
+            if (client.Start(out eM))
             {
                 chatBox.Items.Add(eM);
                 checkingMessage = new Thread(client.RecievedMessage);
@@ -131,7 +131,7 @@ namespace ChatUI
         //network menu item to disconnect
         private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (client.close(out eM))
+            if (client.Close(out eM))
             {
                 chatBox.Items.Add(eM);
             }
