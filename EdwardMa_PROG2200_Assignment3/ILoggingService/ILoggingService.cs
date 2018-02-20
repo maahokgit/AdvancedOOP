@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ILoggingService
 {
-    public class Class1
+    interface ILoggingService
     {
+        void Log(string message);
     }
 }
