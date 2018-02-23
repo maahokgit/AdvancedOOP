@@ -107,7 +107,6 @@ namespace ChatUI
             {
                 chatBox.Items.Add(eM);
             }
-
         }
 
         //network menu item to disconnect
