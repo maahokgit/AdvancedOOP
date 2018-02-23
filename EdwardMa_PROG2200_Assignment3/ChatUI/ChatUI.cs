@@ -1,4 +1,5 @@
 ﻿using ChatLib;
+using ChatLog;
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -8,6 +9,7 @@ namespace ChatUI
     public partial class ChatUI : Form
     {
         Client client = new Client();
+        LogToFile logToFile = new LogToFile();
         Thread checkingMessage;
         string eM;
 
@@ -78,7 +80,12 @@ namespace ChatUI
 
         private void ChatUI_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ChatLog();
+            foreach (var item in chatBox.Items)
+            {
+                logToFile.Log(item.ToString());
+            }
+
+
             if (checkingMessage != null && checkingMessage.IsAlive)
             {
                 client.checkConnection = false;
@@ -86,22 +93,22 @@ namespace ChatUI
             }
         }
 
-        private void ChatLog()
-        {
-            DateTime thisDay = DateTime.Today;
-            string fileName = thisDay.ToString("D") + ".txt";
-            //const string sPath = fileName;
+        //private void ChatLog()
+        //{
+        //    DateTime thisDay = DateTime.Today;
+        //    string fileName = thisDay.ToString("D") + ".txt";
+        //    //const string sPath = fileName;
 
-            System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(fileName);
-            foreach (var item in chatBox.Items)
-            {
-                SaveFile.WriteLine(item);
-            }
+        //    System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(fileName);
+        //    foreach (var item in chatBox.Items)
+        //    {
+        //        SaveFile.WriteLine(item);
+        //    }
 
-            SaveFile.Close();
+        //    SaveFile.Close();
 
-            MessageBox.Show("Chat saved!");
-        }
+        //    MessageBox.Show("Chat saved!");
+        //}
 
         //network menu item to connect to server
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)

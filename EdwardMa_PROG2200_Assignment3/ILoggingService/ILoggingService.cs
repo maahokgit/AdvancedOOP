@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ILoggingService
+﻿namespace ILog
 {
-    interface ILoggingService
+    public interface ILoggingService
     {
         void Log(string message);
     }

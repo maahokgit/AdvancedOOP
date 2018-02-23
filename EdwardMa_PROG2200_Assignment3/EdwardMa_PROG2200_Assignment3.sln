@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatUI", "ChatUI\ChatUI.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatLib", "ChatLib\ChatLib.csproj", "{7DD58CAA-851A-40D1-B0CC-FA04783F818D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILoggingService", "ILoggingService\ILoggingService.csproj", "{42AEB8F9-6803-485D-99C3-18D42E83CE75}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILog", "ILoggingService\ILog.csproj", "{42AEB8F9-6803-485D-99C3-18D42E83CE75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatLog", "ChatLog\ChatLog.csproj", "{75E10E2C-A89B-4436-A73A-5332171DE044}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{42AEB8F9-6803-485D-99C3-18D42E83CE75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42AEB8F9-6803-485D-99C3-18D42E83CE75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42AEB8F9-6803-485D-99C3-18D42E83CE75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75E10E2C-A89B-4436-A73A-5332171DE044}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75E10E2C-A89B-4436-A73A-5332171DE044}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75E10E2C-A89B-4436-A73A-5332171DE044}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75E10E2C-A89B-4436-A73A-5332171DE044}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
