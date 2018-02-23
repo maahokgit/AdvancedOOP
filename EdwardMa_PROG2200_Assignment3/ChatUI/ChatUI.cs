@@ -93,23 +93,6 @@ namespace ChatUI
             }
         }
 
-        //private void ChatLog()
-        //{
-        //    DateTime thisDay = DateTime.Today;
-        //    string fileName = thisDay.ToString("D") + ".txt";
-        //    //const string sPath = fileName;
-
-        //    System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(fileName);
-        //    foreach (var item in chatBox.Items)
-        //    {
-        //        SaveFile.WriteLine(item);
-        //    }
-
-        //    SaveFile.Close();
-
-        //    MessageBox.Show("Chat saved!");
-        //}
-
         //network menu item to connect to server
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
         {
