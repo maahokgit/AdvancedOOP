@@ -1,5 +1,5 @@
 ﻿using ChatLib;
-using ChatLog;
+using ILog;
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -8,13 +8,15 @@ namespace ChatUI
 {
     public partial class ChatUI : Form
     {
+        private readonly ILoggingService log;
         Client client = new Client();
-        LogToFile logToFile = new LogToFile();
+
         Thread checkingMessage;
         string eM;
 
-        public ChatUI()
+        public ChatUI(ILoggingService log)
         {
+            this.log = log;
             InitializeComponent();
 
             client.EventMsg += new ChatLib.MessageRecieveEventArgs(CheckingMessage);
@@ -82,7 +84,8 @@ namespace ChatUI
         {
             foreach (var item in chatBox.Items)
             {
-                logToFile.Log(item.ToString());
+                //ILoggingService(item.ToString());
+                log.Log(DateTime.Now.ToString() + ": "+ item.ToString());
             }
 
 

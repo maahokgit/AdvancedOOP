@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unity;
+using ChatLog;
+using ILog;
 
 namespace ChatUI
 {
@@ -16,7 +16,11 @@ namespace ChatUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ChatUI());
+           
+            UnityContainer container = new UnityContainer();
+
+            container.RegisterType<ILoggingService, LogToFile>();
+            Application.Run(container.Resolve<ChatUI>());
         }
     }
 }
