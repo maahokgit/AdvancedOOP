@@ -3,7 +3,7 @@ using NLog;
 
 namespace ChatLog
 {
-    public class NLog : ILoggingService
+    public class NLogToFile : ILoggingService
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         public void Log(string message)

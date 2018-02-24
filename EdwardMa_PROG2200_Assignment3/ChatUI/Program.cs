@@ -20,7 +20,7 @@ namespace ChatUI
             UnityContainer container = new UnityContainer();
 
             //container.RegisterType<ILoggingService, LogToFile>();
-            container.RegisterType<ILoggingService, NLog>();
+            container.RegisterType<ILoggingService, NLogToFile>();
             Application.Run(container.Resolve<ChatUI>());
         }
     }
