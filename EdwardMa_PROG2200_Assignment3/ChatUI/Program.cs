@@ -16,9 +16,16 @@ namespace ChatUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-           
-            UnityContainer container = new UnityContainer();
 
+            //SimpleInjector IOC Container!
+            //SimpleInjector.Container container = new SimpleInjector.Container();
+            ////container.Register<ILoggingService, LogToFile>();
+            //container.Register<ILoggingService, NLogToFile>();
+            //container.Verify();
+            //Application.Run(container.GetInstance<ChatUI>());
+
+            //Unity IOC Container
+            UnityContainer container = new UnityContainer();
             //container.RegisterType<ILoggingService, LogToFile>();
             container.RegisterType<ILoggingService, NLogToFile>();
             Application.Run(container.Resolve<ChatUI>());
