@@ -1,5 +1,5 @@
 ﻿using ChatLib;
-using ILog;
+using ChatLog;
 using System;
 using System.Threading;
 using System.Windows.Forms;

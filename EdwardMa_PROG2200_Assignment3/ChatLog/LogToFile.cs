@@ -1,5 +1,4 @@
-﻿using ILog;
-using System;
+﻿using System;
 using System.IO;
 
 namespace ChatLog

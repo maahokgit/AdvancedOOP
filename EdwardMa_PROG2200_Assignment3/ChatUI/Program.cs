@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using Unity;
 using ChatLog;
-using ILog;
 
 namespace ChatUI
 {

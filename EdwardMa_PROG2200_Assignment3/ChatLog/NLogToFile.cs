@@ -1,5 +1,4 @@
-﻿using ILog;
-using NLog;
+﻿using NLog;
 
 namespace ChatLog
 {

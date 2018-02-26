@@ -124,10 +124,6 @@
       <Project>{75e10e2c-a89b-4436-a73a-5332171de044}</Project>
       <Name>ChatLog</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ILoggingService\ILog.csproj">
-      <Project>{42aeb8f9-6803-485d-99c3-18d42e83ce75}</Project>
-      <Name>ILog</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
