@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 
 //Comment out to use SimpleInjector
-//using Unity;
+using Unity;
 
 //comment out ChatLog to use Stephen's ChatLogger
 //using ChatLog;
@@ -26,7 +26,7 @@ namespace ChatUI
             // Comment out to use Unity IOC Container
             // SimpleInjector IOC Container!
 
-            SimpleInjector.Container container = new SimpleInjector.Container();
+            //SimpleInjector.Container container = new SimpleInjector.Container();
 
             //*** Edward's Logger ***
             //container.Register<ILoggingService, LogToFile>();
@@ -35,14 +35,14 @@ namespace ChatUI
             //container.Register<ILoggingService, NLogToFile>();
 
             //*** Edward's Logger ***
-            container.Register<ILoggingService, ChatLogNLog>();
+            //container.Register<ILoggingService, ChatLogNLog>();
 
-            container.Verify();
-            Application.Run(container.GetInstance<ChatUI>());
+            //container.Verify();
+            //Application.Run(container.GetInstance<ChatUI>());
 
 
             // Unity IOC Container
-            //UnityContainer container = new UnityContainer();
+            UnityContainer container = new UnityContainer();
 
             //*** Edward's Logger ***
             //container.RegisterType<ILoggingService, LogToFile>();
@@ -51,9 +51,9 @@ namespace ChatUI
             //container.RegisterType<ILoggingService, NLogToFile>();
 
             //*** Edward's Logger ***
-            //container.RegisterType<ILoggingService, ChatLogNLog>();
+            container.RegisterType<ILoggingService, ChatLogNLog>();
 
-            //Application.Run(container.Resolve<ChatUI>());
+            Application.Run(container.Resolve<ChatUI>());
         }
     }
 }
