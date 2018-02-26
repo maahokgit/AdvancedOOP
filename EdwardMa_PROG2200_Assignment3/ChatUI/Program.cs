@@ -1,7 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
-using Unity;
-using ChatLog;
+
+//Comment out to use SimpleInjector
+//using Unity;
+
+//comment out ChatLog to use Stephen's ChatLogger
+//using ChatLog;
+
+//Comment out ChatLogger to use Edward's ChatLog
+using ChatLogger;
 
 namespace ChatUI
 {
@@ -16,18 +23,37 @@ namespace ChatUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //SimpleInjector IOC Container!
-            //SimpleInjector.Container container = new SimpleInjector.Container();
-            ////container.Register<ILoggingService, LogToFile>();
-            //container.Register<ILoggingService, NLogToFile>();
-            //container.Verify();
-            //Application.Run(container.GetInstance<ChatUI>());
+            // Comment out to use Unity IOC Container
+            // SimpleInjector IOC Container!
 
-            //Unity IOC Container
-            UnityContainer container = new UnityContainer();
+            SimpleInjector.Container container = new SimpleInjector.Container();
+
+            //*** Edward's Logger ***
+            //container.Register<ILoggingService, LogToFile>();
+
+            //*** Edward's Logger ***
+            //container.Register<ILoggingService, NLogToFile>();
+
+            //*** Edward's Logger ***
+            container.Register<ILoggingService, ChatLogNLog>();
+
+            container.Verify();
+            Application.Run(container.GetInstance<ChatUI>());
+
+
+            // Unity IOC Container
+            //UnityContainer container = new UnityContainer();
+
+            //*** Edward's Logger ***
             //container.RegisterType<ILoggingService, LogToFile>();
-            container.RegisterType<ILoggingService, NLogToFile>();
-            Application.Run(container.Resolve<ChatUI>());
+
+            //*** Edward's Logger ***
+            //container.RegisterType<ILoggingService, NLogToFile>();
+
+            //*** Edward's Logger ***
+            //container.RegisterType<ILoggingService, ChatLogNLog>();
+
+            //Application.Run(container.Resolve<ChatUI>());
         }
     }
 }

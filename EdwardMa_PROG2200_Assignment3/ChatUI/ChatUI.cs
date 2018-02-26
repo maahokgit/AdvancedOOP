@@ -1,5 +1,11 @@
 ﻿using ChatLib;
-using ChatLog;
+
+// Stephen's Logger
+using ChatLogger;
+
+// Edward's Logger
+//using ChatLog;
+
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -19,8 +25,8 @@ namespace ChatUI
             this.log = log;
             InitializeComponent();
 
-            client.EventMsg += new ChatLib.MessageRecieveEventArgs(CheckingMessage);
-            client.DisconEventMsg += new ChatLib.ServerDisconnectEventArgs(ServerDisconnect);
+            client.EventMsg += new MessageRecieveEventArgs(CheckingMessage);
+            client.DisconEventMsg += new ServerDisconnectEventArgs(ServerDisconnect);
         }
 
         private void ServerDisconnect(object sender, DisconnectMsgEventArgs e)
