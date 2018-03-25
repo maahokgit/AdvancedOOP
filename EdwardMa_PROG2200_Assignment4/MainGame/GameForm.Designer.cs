@@ -37,7 +37,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(1394, 669);
+            this.ClientSize = new System.Drawing.Size(1027, 473);
             this.DoubleBuffered = true;
             this.Name = "GameForm";
             this.Text = "It\'s a game-ah!";
