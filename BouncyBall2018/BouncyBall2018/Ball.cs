@@ -11,7 +11,7 @@ namespace BouncyBall2018
 
         private int XVelocity, YVelocity;
 
-        private Random random = new Random();
+        Random random = new Random();
 
         private Color color;
         string[] imageNames = 
@@ -33,7 +33,7 @@ namespace BouncyBall2018
             "images/q1z_015.png"
         };
 
-        //private Image images = Image.FromFile("images/Aqua-Ball-icon.png");
+        private Image images = Image.FromFile("images/Aqua-Ball-icon.png");
         public Ball(Rectangle mainCanvas)
         {
             this.mainCanvas = mainCanvas;
@@ -95,7 +95,7 @@ namespace BouncyBall2018
         {
             //SolidBrush brush = new SolidBrush(color);
             //graphics.FillEllipse(brush, ballBox);
-            graphics.DrawImage(Image.FromFile(imageNames[random.Next(0,14)]), ballBox);
+            graphics.DrawImage(images, ballBox);
         }
 
         public void FlipX()
