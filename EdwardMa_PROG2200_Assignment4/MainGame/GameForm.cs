@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace MainGame
@@ -6,6 +7,8 @@ namespace MainGame
     public partial class GameForm : Form
     {
         MagaPaddle magaPaddle;
+        HashSet<Obstacle> obstacles = new HashSet<Obstacle>();
+
         public GameForm()
         {
             InitializeComponent();
@@ -16,11 +19,17 @@ namespace MainGame
             WindowState = FormWindowState.Maximized;
 
             magaPaddle = new MagaPaddle(DisplayRectangle);
+            obstacles.Add(new Obstacle(DisplayRectangle));
         }
 
         private void GameForm_Paint(object sender, PaintEventArgs e)
         {
             magaPaddle.Draw(e.Graphics);
+
+            foreach (Obstacle obstacle in obstacles)
+            {
+                obstacle.Draw(e.Graphics);
+            }
         }
 
         private void GameForm_KeyDown(object sender, KeyEventArgs e)
@@ -54,6 +63,11 @@ namespace MainGame
                         break;
                     }
             }
+        }
+
+        private void gameTimer_Tick(object sender, EventArgs e)
+        {
+
         }
     }
 }
