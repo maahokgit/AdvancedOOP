@@ -14,12 +14,30 @@ namespace BouncyBall2018
         private Random random = new Random();
 
         private Color color;
+        string[] imageNames = 
+            {
+            "images/q1z_001.png",
+            "images/q1z_002.png",
+            "images/q1z_003.png",
+            "images/q1z_004.png",
+            "images/q1z_005.png",
+            "images/q1z_006.png",
+            "images/q1z_007.png",
+            "images/q1z_008.png",
+            "images/q1z_009.png",
+            "images/q1z_010.png",
+            "images/q1z_011.png",
+            "images/q1z_012.png",
+            "images/q1z_013.png",
+            "images/q1z_014.png",
+            "images/q1z_015.png"
+        };
 
-        private Image image = Image.FromFile("images/Aqua-Ball-icon.png");
+        //private Image images = Image.FromFile("images/Aqua-Ball-icon.png");
         public Ball(Rectangle mainCanvas)
         {
             this.mainCanvas = mainCanvas;
-
+            
             // set the size of our ballbox
             ballBox.Height = size;
             ballBox.Width = size;
@@ -77,8 +95,7 @@ namespace BouncyBall2018
         {
             //SolidBrush brush = new SolidBrush(color);
             //graphics.FillEllipse(brush, ballBox);
-
-            graphics.DrawImage(image, ballBox);
+            graphics.DrawImage(Image.FromFile(imageNames[random.Next(0,14)]), ballBox);
         }
 
         public void FlipX()
