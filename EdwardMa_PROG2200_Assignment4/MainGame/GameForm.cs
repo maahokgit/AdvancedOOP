@@ -65,12 +65,42 @@ namespace MainGame
 
         private void ObstacleTimer_Tick(object sender, EventArgs e)
         {
-            // tell the ball to move
+            // tell the obstacle to move
             foreach (Obstacle obstacle in obstacles)
             {
                 obstacle.Move();
             }
+
+            CheckForCollisions();
             Invalidate();
+        }
+
+        private void CheckForCollisions()
+        {
+            foreach (Obstacle obstacle in obstacles)
+            {
+                // collision with left wall
+                if (obstacle.CurrentX <= DisplayRectangle.Left)
+                {
+                    obstacle.FlipX();
+                }
+
+                // collision with right wall
+                if (obstacle.CurrentX + obstacle.Size >= DisplayRectangle.Right)
+                {
+                    obstacle.FlipX();
+                }
+                // collision with ceiling
+                if (obstacle.CurrentY <= DisplayRectangle.Top)
+                {
+                    obstacle.FlipY();
+                }
+
+                if (obstacle.CurrentY + obstacle.Size > DisplayRectangle.Bottom)
+                {
+                    obstacle.FlipY();
+                }
+            }
         }
     }
 }

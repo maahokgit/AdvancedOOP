@@ -7,7 +7,7 @@ namespace MainGame
     {
         public Rectangle obsBox;
         private Rectangle mainCanvas;
-        private int size = 37;
+        private int size = 40;
 
         private int XVelocity, YVelocity;
 
