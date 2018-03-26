@@ -23,6 +23,7 @@ namespace MainGame
         };
 
         Image images;
+
         public Point(Rectangle mainCanvas)
         {
             this.mainCanvas = mainCanvas;
@@ -33,8 +34,11 @@ namespace MainGame
             pointBall.X = (random.Next(1, mainCanvas.Width - pointBall.Width));
             pointBall.Y = (random.Next(1, mainCanvas.Height - pointBall.Height));
 
-            int num = random.Next(0, 6);
-            images = Image.FromFile(imageArray[num]);
+            images = Image.FromFile(imageArray[random.Next(0,6)]);
+            //for (int i = 0;i < 6; i++)
+            //{
+            //    images = Image.FromFile(imageArray[i]);
+            //}
         }
 
         public void Draw (Graphics graphics)

@@ -8,7 +8,9 @@ namespace MainGame
     {
         MagaPaddle magaPaddle;
         HashSet<Obstacle> obstacles = new HashSet<Obstacle>();
-        Point point;
+        HashSet<Point> points = new HashSet<Point>();
+
+        int pointNum = 0;
         public GameForm()
         {
             InitializeComponent();
@@ -20,7 +22,7 @@ namespace MainGame
 
             magaPaddle = new MagaPaddle(DisplayRectangle);
             obstacles.Add(new Obstacle(DisplayRectangle));
-            point = new Point(DisplayRectangle);
+            points.Add(new Point(DisplayRectangle));
         }
 
         private void GameForm_Paint(object sender, PaintEventArgs e)
@@ -32,8 +34,13 @@ namespace MainGame
                 obstacle.Draw(e.Graphics);
             }
 
-            point.Draw(e.Graphics);
+            foreach (Point point in points)
+            {
+                point.Draw(e.Graphics);
+            }
+
             obstacleTimer.Start();
+            pointTimer.Start();
         }
 
         private void GameForm_KeyDown(object sender, KeyEventArgs e)
@@ -73,6 +80,12 @@ namespace MainGame
                 obstacle.Move();
             }
 
+            if (pointNum != 6)
+            {
+                points.Add(new Point(DisplayRectangle));
+                pointNum += 1;
+            }
+            
             CheckForCollisions();
 
             Invalidate();
@@ -104,6 +117,11 @@ namespace MainGame
                     obstacle.FlipY();
                 }
             }
+        }
+
+        private void pointTimer_Tick(object sender, EventArgs e)
+        {
+            obstacles.Add(new Obstacle(DisplayRectangle));
         }
     }
 }
