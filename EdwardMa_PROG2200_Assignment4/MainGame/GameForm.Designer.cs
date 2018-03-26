@@ -32,17 +32,23 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameForm));
             this.obstacleTimer = new System.Windows.Forms.Timer(this.components);
             this.pointTimer = new System.Windows.Forms.Timer(this.components);
+            this.gameTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // obstacleTimer
             // 
-            this.obstacleTimer.Interval = 20;
+            this.obstacleTimer.Interval = 2000;
             this.obstacleTimer.Tick += new System.EventHandler(this.ObstacleTimer_Tick);
             // 
             // pointTimer
             // 
-            this.pointTimer.Interval = 10000;
+            this.pointTimer.Interval = 2000;
             this.pointTimer.Tick += new System.EventHandler(this.pointTimer_Tick);
+            // 
+            // gameTimer
+            // 
+            this.gameTimer.Interval = 20;
+            this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             // 
             // GameForm
             // 
@@ -65,6 +71,7 @@
 
         private System.Windows.Forms.Timer obstacleTimer;
         private System.Windows.Forms.Timer pointTimer;
+        private System.Windows.Forms.Timer gameTimer;
     }
 }
 

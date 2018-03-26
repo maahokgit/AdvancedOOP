@@ -39,6 +39,7 @@ namespace MainGame
                 point.Draw(e.Graphics);
             }
 
+            gameTimer.Start();
             obstacleTimer.Start();
             pointTimer.Start();
         }
@@ -74,21 +75,7 @@ namespace MainGame
 
         private void ObstacleTimer_Tick(object sender, EventArgs e)
         {
-            // tell the obstacle to move
-            foreach (Obstacle obstacle in obstacles)
-            {
-                obstacle.Move();
-            }
-
-            if (pointNum != 6)
-            {
-                points.Add(new Point(DisplayRectangle));
-                pointNum += 1;
-            }
-            
-            CheckForCollisions();
-
-            Invalidate();
+            obstacles.Add(new Obstacle(DisplayRectangle));
         }
 
         private void CheckForCollisions()
@@ -121,7 +108,24 @@ namespace MainGame
 
         private void pointTimer_Tick(object sender, EventArgs e)
         {
-            obstacles.Add(new Obstacle(DisplayRectangle));
+            if(pointNum != 6)
+            {
+                points.Add(new Point(DisplayRectangle));
+                pointNum += 1;
+            }
+        }
+
+        private void gameTimer_Tick(object sender, EventArgs e)
+        {
+            // tell the obstacle to move
+            foreach (Obstacle obstacle in obstacles)
+            {
+                obstacle.Move();
+            }
+
+            CheckForCollisions();
+
+            Invalidate();
         }
     }
 }
