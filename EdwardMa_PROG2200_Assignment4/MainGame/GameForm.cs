@@ -8,7 +8,7 @@ namespace MainGame
     {
         MagaPaddle magaPaddle;
         HashSet<Obstacle> obstacles = new HashSet<Obstacle>();
-
+        Point point;
         public GameForm()
         {
             InitializeComponent();
@@ -20,6 +20,7 @@ namespace MainGame
 
             magaPaddle = new MagaPaddle(DisplayRectangle);
             obstacles.Add(new Obstacle(DisplayRectangle));
+            point = new Point(DisplayRectangle);
         }
 
         private void GameForm_Paint(object sender, PaintEventArgs e)
@@ -31,6 +32,7 @@ namespace MainGame
                 obstacle.Draw(e.Graphics);
             }
 
+            point.Draw(e.Graphics);
             obstacleTimer.Start();
         }
 
@@ -72,6 +74,7 @@ namespace MainGame
             }
 
             CheckForCollisions();
+
             Invalidate();
         }
 
