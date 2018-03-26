@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace MainGame
@@ -11,6 +12,7 @@ namespace MainGame
         HashSet<Point> points = new HashSet<Point>();
 
         int pointNum = 0;
+        int totalPoint = 7;
         public GameForm()
         {
             InitializeComponent();
@@ -38,7 +40,7 @@ namespace MainGame
             {
                 point.Draw(e.Graphics);
             }
-
+            DisplayBallCount(e.Graphics);
             gameTimer.Start();
             obstacleTimer.Start();
             pointTimer.Start();
@@ -80,6 +82,8 @@ namespace MainGame
 
         private void CheckForCollisions()
         {
+            points.RemoveWhere(PointTouchPaddle);
+
             foreach (Obstacle obstacle in obstacles)
             {
                 // collision with left wall
@@ -103,7 +107,18 @@ namespace MainGame
                 {
                     obstacle.FlipY();
                 }
+
+                if (magaPaddle.magaBox.IntersectsWith(obstacle.obsBox))
+                {
+                    obstacleTimer.Stop();
+                    pointTimer.Stop();
+                    gameTimer.Stop();
+                    MessageBox.Show("You got hit!");
+                    Environment.Exit(1);
+                }
             }
+
+
         }
 
         private void pointTimer_Tick(object sender, EventArgs e)
@@ -126,6 +141,21 @@ namespace MainGame
             CheckForCollisions();
 
             Invalidate();
+        }
+
+        public bool PointTouchPaddle(Point point)
+        {
+            return magaPaddle.magaBox.IntersectsWith(point.pointBall);
+        }
+
+        public void DisplayBallCount(Graphics graphics)
+        {
+            // ask the hashset for it's current count
+            string display = String.Format("Point Count: {0}", points.Count);
+
+            Font font = new Font("Verdana", 30);
+
+            graphics.DrawString(display, font, Brushes.White, 20, 20);
         }
     }
 }

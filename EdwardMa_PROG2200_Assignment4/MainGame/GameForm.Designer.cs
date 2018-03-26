@@ -42,7 +42,7 @@
             // 
             // pointTimer
             // 
-            this.pointTimer.Interval = 2000;
+            this.pointTimer.Interval = 1;
             this.pointTimer.Tick += new System.EventHandler(this.pointTimer_Tick);
             // 
             // gameTimer
