@@ -12,7 +12,8 @@ namespace MainGame
         HashSet<Point> points = new HashSet<Point>();
 
         int pointNum = 0;
-        int totalPoint = 7;
+        int lifeCount = 3;
+        int gameState = 0;
         public GameForm()
         {
             InitializeComponent();
@@ -29,21 +30,42 @@ namespace MainGame
 
         private void GameForm_Paint(object sender, PaintEventArgs e)
         {
-            magaPaddle.Draw(e.Graphics);
 
-            foreach (Obstacle obstacle in obstacles)
+            if (gameState ==0)
             {
-                obstacle.Draw(e.Graphics);
-            }
+                magaPaddle.Draw(e.Graphics);
 
-            foreach (Point point in points)
-            {
-                point.Draw(e.Graphics);
+                foreach (Obstacle obstacle in obstacles)
+                {
+                    obstacle.Draw(e.Graphics);
+                }
+
+                foreach (Point point in points)
+                {
+                    point.Draw(e.Graphics);
+                }
+                DisplayBallCount(e.Graphics);
+                DisplayNumberOfLife(e.Graphics);
+                gameTimer.Start();
+                obstacleTimer.Start();
+                pointTimer.Start();
             }
-            DisplayBallCount(e.Graphics);
-            gameTimer.Start();
-            obstacleTimer.Start();
-            pointTimer.Start();
+            //magaPaddle.Draw(e.Graphics);
+
+            //foreach (Obstacle obstacle in obstacles)
+            //{
+            //    obstacle.Draw(e.Graphics);
+            //}
+
+            //foreach (Point point in points)
+            //{
+            //    point.Draw(e.Graphics);
+            //}
+            //DisplayBallCount(e.Graphics);
+            //DisplayNumberOfLife(e.Graphics);
+            //gameTimer.Start();
+            //obstacleTimer.Start();
+            //pointTimer.Start();
         }
 
         private void GameForm_KeyDown(object sender, KeyEventArgs e)
@@ -72,6 +94,7 @@ namespace MainGame
                         magaPaddle.Move(MagaPaddle.Direction.Down);
                         break;
                     }
+                  
             }
         }
 
@@ -83,6 +106,11 @@ namespace MainGame
         private void CheckForCollisions()
         {
             points.RemoveWhere(PointTouchPaddle);
+
+            if(pointNum == 0)
+            {
+                Application.Restart();
+            }
 
             foreach (Obstacle obstacle in obstacles)
             {
@@ -110,14 +138,24 @@ namespace MainGame
 
                 if (magaPaddle.magaBox.IntersectsWith(obstacle.obsBox))
                 {
-                    obstacleTimer.Stop();
-                    pointTimer.Stop();
-                    gameTimer.Stop();
-                    MessageBox.Show("You got hit!");
-                    Environment.Exit(1);
+                    lifeCount -= 1;
+                    obstacle.FlipX();
+                    magaPaddle = new MagaPaddle(DisplayRectangle);
+                    if (lifeCount == 0)
+                    {
+                        Application.Restart();
+                    }
                 }
             }
+        }
 
+        public void DisplayEndGame(Graphics graphics)
+        {
+            string display = String.Format("Great Game!");
+
+            Font font = new Font("Verdana", 30);
+
+            graphics.DrawString(display, font, Brushes.White, 400, 20);
 
         }
 
@@ -157,5 +195,16 @@ namespace MainGame
 
             graphics.DrawString(display, font, Brushes.White, 20, 20);
         }
+
+        public void DisplayNumberOfLife(Graphics graphics)
+        {
+            string display = String.Format("Life Left: {0}", lifeCount);
+
+            Font font = new Font("Verdana", 30);
+
+            graphics.DrawString(display, font, Brushes.White, 400, 20);
+        }
+
+       
     }
 }

@@ -6,7 +6,9 @@ namespace MainGame
     {
         public Rectangle magaBox;
         Rectangle mainCanvas;
-        private int size = 75;
+        private int size = 40
+            
+            ;
         private Image image = Image.FromFile("Images/q1z_010.png");
         public enum Direction
         {
