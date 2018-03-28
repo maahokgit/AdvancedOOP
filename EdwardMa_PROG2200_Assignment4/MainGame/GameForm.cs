@@ -46,9 +46,18 @@ namespace MainGame
                 }
                 DisplayBallCount(e.Graphics);
                 DisplayNumberOfLife(e.Graphics);
+
                 gameTimer.Start();
                 obstacleTimer.Start();
                 pointTimer.Start();
+            }
+            else
+            {
+                DisplayEndGame(e.Graphics);
+                obstacles.Clear();
+                points.Clear();
+                lifeCount = 3;
+                pointNum = -1;
             }
             //magaPaddle.Draw(e.Graphics);
 
@@ -94,6 +103,11 @@ namespace MainGame
                         magaPaddle.Move(MagaPaddle.Direction.Down);
                         break;
                     }
+                case Keys.Space:
+                    {
+                        gameState = 0;
+                        break;
+                    }
                   
             }
         }
@@ -109,7 +123,7 @@ namespace MainGame
 
             if(pointNum == 0)
             {
-                Application.Restart();
+                gameState = 1;
             }
 
             foreach (Obstacle obstacle in obstacles)
@@ -143,7 +157,7 @@ namespace MainGame
                     magaPaddle = new MagaPaddle(DisplayRectangle);
                     if (lifeCount == 0)
                     {
-                        Application.Restart();
+                        gameState = 1;
                     }
                 }
             }
@@ -156,7 +170,6 @@ namespace MainGame
             Font font = new Font("Verdana", 30);
 
             graphics.DrawString(display, font, Brushes.White, 400, 20);
-
         }
 
         private void pointTimer_Tick(object sender, EventArgs e)
@@ -205,6 +218,5 @@ namespace MainGame
             graphics.DrawString(display, font, Brushes.White, 400, 20);
         }
 
-       
     }
 }
