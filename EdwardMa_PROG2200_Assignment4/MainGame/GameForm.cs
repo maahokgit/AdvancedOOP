@@ -51,9 +51,17 @@ namespace MainGame
                 obstacleTimer.Start();
                 pointTimer.Start();
             }
-            else
+            else if (gameState == 1)
             {
                 DisplayEndGame(e.Graphics);
+                obstacles.Clear();
+                points.Clear();
+                lifeCount = 3;
+                pointNum = -1;
+            }
+            else
+            {
+                DisplayEndWinGame(e.Graphics);
                 obstacles.Clear();
                 points.Clear();
                 lifeCount = 3;
@@ -121,11 +129,6 @@ namespace MainGame
         {
             points.RemoveWhere(PointTouchPaddle);
 
-            if(pointNum == 0)
-            {
-                gameState = 1;
-            }
-
             foreach (Obstacle obstacle in obstacles)
             {
                 // collision with left wall
@@ -165,7 +168,16 @@ namespace MainGame
 
         public void DisplayEndGame(Graphics graphics)
         {
-            string display = String.Format("Great Game!");
+            string display = String.Format("Game Over! Hit Space to Restart");
+
+            Font font = new Font("Verdana", 30);
+
+            graphics.DrawString(display, font, Brushes.White, 400, 20);
+        }
+
+        public void DisplayEndWinGame(Graphics graphics)
+        {
+            string display = String.Format("Great Game! Hit Space to Restart");
 
             Font font = new Font("Verdana", 30);
 
@@ -189,9 +201,18 @@ namespace MainGame
                 obstacle.Move();
             }
 
+            CheckForPoints();
             CheckForCollisions();
 
             Invalidate();
+        }
+
+        private void CheckForPoints()
+        {
+            if (points.Count == 0)
+            {
+                gameState = 2;
+            }
         }
 
         public bool PointTouchPaddle(Point point)
