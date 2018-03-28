@@ -31,7 +31,7 @@ namespace MainGame
         private void GameForm_Paint(object sender, PaintEventArgs e)
         {
 
-            if (gameState ==0)
+            if (gameState == 0)
             {
                 magaPaddle.Draw(e.Graphics);
 
